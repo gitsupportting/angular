@@ -1,0 +1,58 @@
+@import '../../../../_utils.less';
+
+:host {
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --transition-speed: 0;
+    }
+  }
+  --diagnose-text-surface: #292e2f;
+  --diagnose-text-on-surface: #f4f4f4;
+  --diagnose-text-primary: #282e30;
+  --diagnose-text-primary-800: #343b3d;
+  --diagnose-text-primary-900: #2f3435;
+  --diagnose-text-on-primary: #636d73;
+  --diagnose-text-on-primary-constrast: #fff;
+
+  :host-context([data-theme='light']) {
+    --diagnose-text-surface: #292e2f;
+    --diagnose-text-on-surface: #f4f4f4;
+    --diagnose-text-primary: #dedede;
+    --diagnose-text-primary-800: #bfbfbf;
+    --diagnose-text-primary-900: #eaeaea;
+    --diagnose-text-on-primary-constrast: #343434;
+  }
+}
+
+@array: diagnose-text-surface, diagnose-text-on-surface, diagnose-text-primary,
+  diagnose-text-primary-800, diagnose-text-primary-400, diagnose-text-on-primary,
+  diagnose-text-on-primary-constrast;
+
+.GenClassFromVariableColor(@array, length(@array));
+
+.isShowViewDialog {
+  margin-bottom: 7rem;
+}
+
+.solution.isClick {
+  .detail-box {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.token-row {
+  &:not(:last-child) .table-cell {
+    border-bottom: 1px solid var(--diagnose-text-primary-900);
+  }
+
+  &:hover {
+    background-color: var(--diagnose-text-primary-800);
+  }
+}
+
+.detail-box {
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-speed) var(--transition-timing);
+}

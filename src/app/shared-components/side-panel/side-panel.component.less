@@ -1,0 +1,29 @@
+@import '../../../_utils.less';
+
+:host {
+  --side-background: #1b1f20;
+  --secondary: #414d55;
+  --on-side-background: #fff;
+  --surface: #292e2f;
+  --on-surface: #96a6ae;
+
+  :host-context([data-theme='light']) {
+    --side-background: #dce0e3;
+    --on-side-background: #656565;
+    --surface: #fff;
+    --on-surface: #656565;
+    --secondary: #414d55;
+  }
+}
+
+@array: side-background, secondary, on-side-background, surface, on-surface;
+
+.GenClassFromVariableColor(@array, length(@array));
+
+.border-grey {
+  border-color: var(--secondary);
+}
+
+.overlay {
+  background-color: rgba(#000, 0.3);
+}

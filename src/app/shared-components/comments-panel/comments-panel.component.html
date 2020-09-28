@@ -1,0 +1,90 @@
+<div
+  class="app-comments-panel w-full md:max-w-2xl overflow-y-auto fixed right-0 top-0 bottom-0 z-10"
+  *ngIf="show"
+>
+  <div
+    class="panel-overlay fixed top-0 bottom-0 left-0 right-0 opacity-25 bg-on-primary"
+    (click)="cancelPanel()"
+  ></div>
+  <div class="panel-container h-full">
+    <div class="relative h-full overflow-y-auto flex flex-col">
+      <div class="scrollable-content p-6 bg-surface-alt flex-1">
+        <div class="header flex items-center">
+          <div class="title-wrapper flex-1 m-0">
+            <span class="title text-base leading-normal font-medium"
+              >Comments</span
+            >
+            <span
+              class="comment-count-badge text-center inline-block h-4 w-4 font-bold text-sm leading-4 rounded-full bg-secondary text-surface-alt ml-2"
+              >{{ comments.length }}</span
+            >
+          </div>
+
+          <button
+            class="close-button cursor-pointer text-base leading-normal font-medium"
+            (click)="cancelPanel()"
+            >✖ CLOSE</button
+          >
+        </div>
+
+        <hr class="my-8" />
+
+        <div class="content">
+          <!-- <p class="sub-title text-on-neutral text-sm font-semibold font-sans mb-4">
+            Common Phrase
+          </p>
+          <span class="phrase font-display font-bold text-2xl">
+            You are a really
+            <span class="text-highlight">not very nice</span> person
+          </span> -->
+          <div class="comments-wrapper mt-4" *ngFor="let comment of comments">
+            <mod-comment-item
+              [isSmall]="true"
+              [comment]="comment"
+              [queueId]="queueId"
+              [contentId]="contentId"
+            ></mod-comment-item>
+          </div>
+        </div>
+        <div class="add-comment-wrapper mt-4">
+          <label
+            class="leave-comment text-on-neutral text-sm font-normal font-sans mb-4 block"
+            for="textarea"
+          >
+            Leave a comment
+          </label>
+          <textarea
+            id="textarea"
+            class="bg-neutral text-on-neutral w-full h-32 p-4 text-on-secondary resize-none border-none"
+            placeholder="Type your Comment"
+            [(ngModel)]="commentText"
+          ></textarea>
+        </div>
+      </div>
+      <div
+        class="buttons-wrapper sticky bottom-0 w-full bg-surface flex items-center py-8 px-6"
+      >
+        <div class="left flex-1">
+          <button
+            class="rounded-md bg-primary text-surface-alt mr-4 py-2 w-32 font-semibold border-none"
+            (click)="submit()"
+          >
+            Submit
+          </button>
+          <button
+            class="rounded-md bg-surface-alt text-on-background py-2 w-32 border-none"
+            (click)="cancelPanel()"
+          >
+            Cancel
+          </button>
+        </div>
+        <div class="right">
+          <a
+            class="cursor-pointer text-secondary text-base leading-normal font-medium"
+            >Clear</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

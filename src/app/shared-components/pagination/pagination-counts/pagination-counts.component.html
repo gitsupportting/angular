@@ -1,0 +1,13 @@
+<div class="pagination-page-count flex">
+  <button
+    class="cursor-pointer p-2 w-16 text-center block mr-1 font-normal text-base leading-6 font-body hover:bg-secondary hover:text-on-secondary hover:font-bold first:rounded-l last:rounded-r"
+    [ngClass]="{
+      'bg-secondary text-on-secondary font-bold': i === currentIndex,
+      'bg-neutral text-on-neutral': i !== currentIndex
+    }"
+    *ngFor="let item of countArray; let i = index"
+    (click)="selectPageCount(i, item)"
+    >
+    {{ item }}
+  </button>
+</div>

@@ -1,0 +1,41 @@
+<div *ngIf="readOnly" class="flex flex-wrap items-center leading-none">
+  <i class="mdi mdi-tag-multiple mr-2" title="Tags"></i>
+  <div
+    *ngFor="let tag of readOnlyTags"
+    class="py-2 px-4 bg-neutral text-on-neutral rounded-full mr-2 font-display font-semibold text-xs"
+    [title]="tag.description"
+  >
+    {{ tag.name }}
+  </div>
+</div>
+
+<ng-container *ngIf="!readOnly">
+  <ng-container *ngFor="let tag of optionButtonGroups">
+    <ng-container *ngIf="!tag.ifTag || tags.indexOf(tag.ifTag) >= 0">
+      <div
+        class="mt-4 pt-4 border-t border-solid border-divider first:p-0 first:m-0 first:border-0 first:pt-0"
+      >
+        <mod-option-button-group
+          [label]="tag.name"
+          [options]="tag.options"
+          [multiple]="tag.multiple"
+          [value]="tag.value"
+          (valueChange)="onSelectedOptionsChanged(tag, $event)"
+        ></mod-option-button-group>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div *ngIf="tags.indexOf('WRONG.FIX_TOPICS') >= 0" class="mt-4">
+    <div class="font-display font-medium text-sm mb-2">
+      Suggested topics
+    </div>
+    <mod-topic-chip-list
+      [showProjectedContent]="false"
+      [topics]="topics"
+      [minimized]="minimizeTopics"
+      [readOnly]="false"
+      (updated)="onTopicsUpdated($event)"
+    ></mod-topic-chip-list>
+  </div>
+</ng-container>

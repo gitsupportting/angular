@@ -1,0 +1,23 @@
+<div
+  class="px-4 py-2 flex justify-between items-center"
+  [class]="class"
+  [ngClass]="{
+    'bg-secondary': active && !isMultiple,
+    'cursor-not-allowed': deactive
+  }"
+>
+  <span
+    class="text-sm font-body"
+    [ngClass]="{
+      'text-on-primary': active && !isMultiple,
+      'text-on-background': !active
+    }"
+  >
+    <ng-content></ng-content>
+  </span>
+
+  <i
+    class="mdi mdi-check text-on-primary text-xl"
+    [ngClass]="{ hidden: !active || isMultiple }"
+  ></i>
+</div>

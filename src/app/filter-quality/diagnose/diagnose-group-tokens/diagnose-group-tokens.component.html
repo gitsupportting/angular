@@ -1,0 +1,13 @@
+<div
+  class="bg-neutral flex flex-wrap absolute justify-center items-center md:p-6 p-3 z-20"
+  [style.width.rem]="groupTokenWidth"
+  [ngStyle]="data?.styles"
+>
+  <mod-diagnose-button [keyWord]="searchText"></mod-diagnose-button>
+  <button
+    id="diagnose-create-rule-button"
+    class="ml-3 bg-primary py-3 min-w-34 rounded-md flex justify-center items-center"
+  >
+    <span class="text-sm text-on-primary font-semibold">Create Rule</span>
+  </button>
+</div>

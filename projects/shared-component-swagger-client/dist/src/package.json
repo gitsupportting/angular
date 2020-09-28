@@ -1,0 +1,12 @@
+{
+  "main": "../bundles/shared-component-swagger-client-src.umd.js",
+  "module": "../fesm5/shared-component-swagger-client-src.js",
+  "es2015": "../fesm2015/shared-component-swagger-client-src.js",
+  "esm5": "../esm5/src/shared-component-swagger-client-src.js",
+  "esm2015": "../esm2015/src/shared-component-swagger-client-src.js",
+  "fesm5": "../fesm5/shared-component-swagger-client-src.js",
+  "fesm2015": "../fesm2015/shared-component-swagger-client-src.js",
+  "typings": "shared-component-swagger-client-src.d.ts",
+  "sideEffects": false,
+  "name": "shared-component-swagger-client/src"
+}

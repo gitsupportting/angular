@@ -1,0 +1,21 @@
+<div class="relative w-full">
+  <div
+    class="flex w-full items-center text-on-background-muted hover:text-on-background focus-within:text-on-background"
+  >
+    <label for="main-header-search" aria-hidden="true">
+      <i class="text-xl mr-2 mdi mdi-magnify"></i>
+      <span class="hidden">Search</span>
+    </label>
+    <div class="relative flex-grow">
+      <input
+        id="main-header-search"
+        class="form-input w-full bg-transparent border-transparent focus:border-transparent focus:shadow-none"
+        type="search"
+        aria-label="Search"
+        placeholder="Search for keywords, phrases, etc."
+        [(ngModel)]="keyWord"
+        (keyup)="onKey($event)"
+      />
+    </div>
+  </div>
+</div>

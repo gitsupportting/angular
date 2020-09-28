@@ -1,0 +1,18 @@
+<div
+  class="border border-divider mt-6 rounded-sm relative enter-text-container"
+>
+  <textarea
+    #textarea
+    [(ngModel)]="text"
+    (keydown)="keyDown($event)"
+    placeholder="Type your New Rule here"
+    class="w-full text-2xl p-3 mb-16 overflow-hidden outline-none bg-transparent border-gray-600 enter-text"
+  ></textarea>
+  <button
+    (click)="nextStep()"
+    [disabled]="isTextEmpty()"
+    class="absolute bottom-0 right-0 button py-3 px-10 rounded m-3 bg-secondary text-on-primary"
+  >
+    Recommend
+  </button>
+</div>

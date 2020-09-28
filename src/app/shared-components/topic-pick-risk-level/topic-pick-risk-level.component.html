@@ -1,0 +1,46 @@
+<div class="w-full">
+  <div
+    class="flex md:items-center md:flex-row md:justify-between flex-col justify-start px-3 py-4 rounded-md bg-background mb-5 last:mb-0"
+    *ngFor="let topic of topics"
+  >
+    <div class="flex mb-2 md:mb-0 md:max-w-1/3">
+      <i
+        class="block mr-2 mdi text-on-neutral"
+        [class]="topic.id > 0 ? 'mdi-' + topic.icon : 'mdi-chat'"
+        aria-hidden="true"
+        title="{{ topic?.name }}"
+      ></i>
+      <p
+        class="m-0 w-full md:text-md md:pr-3 text-sm truncate text-on-background ml-2 leading-relaxed"
+        [title]="topic?.name"
+      >
+        {{ topic?.name }}
+      </p>
+    </div>
+
+    <div class="flex items-center">
+      <mod-tooltip
+        *ngFor="let level of risks | keyvalue"
+        [text]="level?.value.name"
+      >
+        <button
+          (click)="!readonly && onChangeLevel(topic.id, level.key)"
+          [attr.data-label]="level?.value.name"
+          [ngClass]="{
+            'transition duration-300 ease-in-out md:w-10
+            md:h-10 md:text-base text-sm w-8 h-8 flex items-center justify-center relative cursor-pointer text-on-neutral font-bold': true,
+            'opacity-25': isChangedOriginLevel(level.key, topic),
+            'bg-neutral':
+              topic.risk != level.key && highlightTopics[topic.id] != level.key
+          }"
+          [class]="getRiskClasses(topic, level)"
+          data-test="topic-level"
+        >
+          <span class="focus:outline-none" tabindex="-1">
+            {{ level?.key }}
+          </span>
+        </button>
+      </mod-tooltip>
+    </div>
+  </div>
+</div>

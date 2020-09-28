@@ -1,0 +1,136 @@
+<mod-language-tasks-home-header></mod-language-tasks-home-header>
+<div class="language-tasks-home pt-8">
+  <div class="tabs-wrapper">
+    <ul
+      class="flex font-display font-semibold text-sm leading-5 pl-12 border-b border-solid border-divider"
+    >
+      <li>
+        <a
+          class="block p-4 border-b-4 border-solid mr-6 cursor-pointer outline-none"
+          [ngClass]="{
+            'border-secondary text-on-background': selectedTab === 'all',
+            'border-transparent text-on-neutral': selectedTab !== 'all'
+          }"
+          (click)="selectTab('all')">
+          All
+        </a>
+      </li>
+      <li>
+        <a 
+          class="block p-4 border-b-4 border-solid mr-6 cursor-pointer outline-none"
+          [ngClass]="{
+            'border-secondary text-on-background': selectedTab === 'assigned_me',
+            'border-transparent text-on-neutral': selectedTab !== 'assigned_me'
+          }"
+          (click)="selectTab('assigned_me')">
+          Assigned me
+        </a>
+      </li>
+      <li>
+        <a
+          class="block p-4 border-b-4 border-solid mr-6 cursor-pointer outline-none"
+          [ngClass]="{
+            'border-secondary text-on-background': selectedTab === 'pending',
+            'border-transparent text-on-neutral': selectedTab !== 'pending'
+          }"
+          (click)="selectTab('pending')">
+          Pending
+        </a>
+      </li>
+      <li>
+        <a
+          class="block p-4 border-b-4 border-solid mr-6 cursor-pointer outline-none"
+          [ngClass]="{
+            'border-secondary text-on-background': selectedTab === 'active',
+            'border-transparent text-on-neutral': selectedTab !== 'active'
+          }"
+          (click)="selectTab('active')">
+          Active
+        </a>
+      </li>
+      <li>
+        <a
+          class="block p-4 border-b-4 border-solid mr-6 cursor-pointer outline-none"
+          [ngClass]="{
+            'border-secondary text-on-background': selectedTab === 'done',
+            'border-transparent text-on-neutral': selectedTab !== 'done'
+          }"
+          (click)="selectTab('done')">
+          Done
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="table-wrapper">
+    <div
+      class="flex font-normal text-sm leading-5 font-body text-on-neutral pt-3 pb-4"
+    >
+      <div class="pl-4 pr-6">
+        <mod-checkbox type="accent"></mod-checkbox>
+      </div>
+      <div class="truncate w-48 pr-4">ID</div>
+      <div class="truncate flex-1 pr-4">Task</div>
+      <div class="truncate w-32 pr-3">Assign To</div>
+      <div class="w-48 pr-3">Unresolved Comments</div>
+      <div class="w-32 pr-2">Due</div>
+      <div class="w-40">Actions</div>
+    </div>
+    <div class="table-body">
+      <div
+        class="flex items-center font-normal text-base leading-6 font-body text-on-background py-3 bg-surface rounded-sm mb-1"
+        *ngFor="
+          let task of tasks
+            | paginate
+              : {
+                  itemsPerPage: countPerPage,
+                  currentPage: currentPage,
+                  totalItems: totalCount
+                }
+        "
+      >
+        <div class="pl-4 pr-6">
+          <mod-checkbox type="accent"></mod-checkbox>
+        </div>
+        <div class="truncate w-48 pr-4">{{ task.queueItem.contentId }}</div>
+        <div class="truncate flex-1 pr-4">{{ task.data.task }}</div>
+        <div class="truncate w-32 pr-3">
+          {{
+            task.queueItem.checkout && task.queueItem.checkout.moderatorId
+              ? task.queueItem.checkout.moderatorId
+              : 'Not Assigned'
+          }}
+        </div>
+        <div class="w-48 pr-3">
+          <mod-comment-button
+            [data]="task"
+            [commentDetail]="task.queueItem && task.queueItem.comments"
+            (handleClick)="openCommentsPanel(task)"
+          ></mod-comment-button>
+        </div>
+        <div class="w-32 pr-2">{{ task.data.dueDate | dueDate }}</div>
+        <div class="w-40">
+          <button
+            class="py-1 px-3 w-24 bg-neutral text-on-neutral flex items-center rounded-sm"
+            [routerLink]="[
+              '/filter-quality/language-tasks',
+              task.queueItem.contentId
+            ]"
+          >
+            <i class="mdi mdi-eye text-lg mr-2"></i>
+            <span>View</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex mt-4">
+      <mod-pagination-controls (pageChange)="onPageChange($event)">
+      </mod-pagination-controls>
+      <div class="inline-block ml-6">
+        <mod-pagination-counts
+          (pageCountChange)="onPageCountChange($event)"
+          [countArray]="perPageCounts"
+        ></mod-pagination-counts>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+<div class="flex font-display">
+  <button
+    class="button rounded-l rounded-r-none mr-1 font-semibold"
+    [disabled]="currentPage <= 1"
+    (click)="onPageButtonClicked(currentPage - 1)"
+  >
+    Prev
+  </button>
+  <ng-container *ngFor="let option of paginationButtonOptions">
+    <!-- Falsy value is displayed as a separator -->
+    <div
+      *ngIf="!option"
+      class="button rounded-none cursor-default hover:bg-neutral hover:text-on-neutral mr-1 font-semibold"
+    >
+      &hellip;
+    </div>
+
+    <!-- Actual page options -->
+    <ng-container *ngIf="option">
+      <div
+        *ngIf="option === currentPage"
+        class="button button-active rounded-none mr-1 font-semibold"
+      >
+        {{ option }}
+      </div>
+      <button
+        *ngIf="option !== currentPage"
+        class="button rounded-none mr-1 font-semibold"
+        (click)="onPageButtonClicked(option)"
+      >
+        {{ option }}
+      </button>
+    </ng-container>
+  </ng-container>
+  <button
+    class="button rounded-l-none rounded-r font-semibold"
+    [disabled]="currentPage >= totalPages"
+    (click)="onPageButtonClicked(currentPage + 1)"
+  >
+    Next
+  </button>
+
+  <div class="flex items-center h-full ml-2">
+    <select
+      class="form-select text-sm py-1 border-neutral bg-neutral text-on-neutral focus:bg-neutral focus:text-on-neutral font-semibold"
+      aria-label="select page"
+      (change)="onPageButtonClicked($event.target.value)"
+    >
+      <option
+        *ngFor="let page of allPageOptions"
+        [value]="page"
+        [selected]="page === currentPage"
+      >
+        {{ page }}
+      </option>
+    </select>
+  </div>
+</div>

@@ -1,0 +1,348 @@
+<div class="max-w-screen-xl px-4 pb-8 mx-auto">
+  <h1
+    class="text-xl pb-8 mb-8 border-solid border-b-2 border-grey text-on-side-background p-5"
+  >
+    Example Page For Review Code
+  </h1>
+
+  <div class="grid grid-cols-3 gap-8 mb-8">
+    <!-- escalate button -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold mb-4">Escalate Button</p>
+
+      <mod-escalate-button
+        key="updateRule"
+        [data]="escalateData"
+      ></mod-escalate-button>
+
+      <p class="text-sm text-on-background mt-4 mb-4">
+        This button link to the escaltion side-panel
+      </p>
+    </div>
+
+    <!-- Simple select box -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold mb-4">
+        Select box simple Component
+      </p>
+      <mod-select-box
+        key="example-component-topic"
+        [class]="'min-w-18'"
+        [label]="selectBoxTopics[0]?.name"
+        [isMultiple]="true"
+      >
+        <mod-option-primary
+          tabindex="-1"
+          role="option"
+          [class]="'min-w-28'"
+          *ngFor="let topic of topicAll"
+          [active]="activeTopics[topic.id]"
+          [deactive]="checkDeactive(topic.id)"
+          (click)="clickTopic(topic.id)"
+          id="{{ 'example-topic-' + topic.id }}"
+        >
+          {{ topic?.name }}
+        </mod-option-primary>
+      </mod-select-box>
+      <p class="text-sm text-danger mb-4">
+        This component might be remove when the selectbox searchable & multiple
+        check already
+      </p>
+    </div>
+
+    <!-- tooltip component -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold mb-4">Tooltip Component</p>
+      <mod-tooltip text="Create  a new rule">
+        <button
+          class="bg-primary text-on-primary p-3 min-w-34 font-body font-bold"
+        >
+          Create Rule
+        </button>
+      </mod-tooltip>
+    </div>
+  </div>
+
+  <!-- topic pick risk level -->
+  <div class="bg-surface p-4 w-2/3 mb-8">
+    <p class="text-md text-on-background font-bold mb-4">
+      TopicPickRiskLevelComponent
+    </p>
+    <!-- <mod-topic-pick-risk-level [topics]="topics"></mod-topic-pick-risk-level> -->
+    <mod-topic-pick-risk-level
+      class="mb-8 flex justify-between"
+      [topics]="selectBoxTopics"
+      (changeRiskLevel)="onChangeLevel($event)"
+    ></mod-topic-pick-risk-level>
+  </div>
+
+  <!-- comment components -->
+  <div class="grid grid-cols-3 gap-8 mb-8">
+    <!-- escalate button -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold">Comment Button</p>
+
+      <mod-comment-button
+        [commentDetail]="commentDetail"
+        [data]="task"
+        (handleClick)="openCommentsPanel(task)"
+      ></mod-comment-button>
+
+      <p class="text-sm text-on-background mt-4">
+        This button link to the comments side-panel
+      </p>
+
+      <div>
+        <mod-checkbox
+          [(ngModel)]="selected"
+          class="mr-2"
+          [small]="true"
+        ></mod-checkbox>
+        <mod-checkbox
+          [(ngModel)]="selected2"
+          class="mr-2"
+          type="accent"
+        ></mod-checkbox>
+        <mod-checkbox [(ngModel)]="selected3" class="mr-2"></mod-checkbox>
+      </div>
+    </div>
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold">Date Picker</p>
+
+      <p class="text-sm text-on-background mt-4">
+        date picker
+      </p>
+      <mod-date-picker
+        id="picker"
+        #dateComponent
+        [config]="config"
+        [(ngModel)]="date"
+        mode="day"
+      >
+      </mod-date-picker>
+      <p class="text-sm text-on-background mt-4">
+        time picker
+      </p>
+      <mod-date-picker
+        id="picker"
+        #dateComponent
+        [config]="config"
+        [(ngModel)]="date"
+        mode="time"
+      >
+      </mod-date-picker>
+      <p class="text-sm text-on-background mt-4">
+        date time picker
+      </p>
+      <mod-date-picker
+        id="picker"
+        #dateComponent
+        [config]="config"
+        [(ngModel)]="date"
+        mode="daytime"
+      >
+      </mod-date-picker>
+      <p class="text-sm text-on-background mt-4">
+        month picker
+      </p>
+      <mod-date-picker
+        id="picker"
+        #dateComponent
+        [config]="config"
+        [(ngModel)]="date"
+        mode="month"
+      >
+      </mod-date-picker>
+    </div>
+    <div class="bg-neutral p-4">
+      <p class="text-md text-on-background font-bold">Select Box</p>
+
+      <mod-select
+        class="mb-3 flex"
+        [items]="languages"
+        displayField="name"
+        valueField="code"
+        [isClickOpen]="true"
+        (doSelect)="changeSelectItem($event)"
+        [(ngModel)]="language"
+      >
+      </mod-select>
+
+      <mod-select
+        class="mb-3 flex"
+        [items]="languages"
+        displayField="name"
+        valueField="code"
+        [isClickOpen]="false"
+        (doSelect)="changeSelectItem($event)"
+        [(ngModel)]="language1"
+      >
+      </mod-select>
+
+      <mod-select
+        class="mb-3 flex"
+        [items]="languages"
+        displayField="name"
+        valueField="code"
+        [isClickOpen]="true"
+        [multiselect]="true"
+        (doSelect)="changeSelectItem($event)"
+        [(ngModel)]="language2"
+      >
+      </mod-select>
+
+      <mod-select
+        class="mb-3 flex"
+        [items]="languages"
+        displayField="name"
+        valueField="code"
+        dir="top"
+        [isClickOpen]="true"
+        [multiselect]="true"
+        (doSelect)="changeSelectItem($event)"
+        [(ngModel)]="language2"
+      >
+      </mod-select>
+
+      <mod-select
+        [items]="languages"
+        displayField="name"
+        valueField="code"
+        [isClickOpen]="false"
+        [multiselect]="true"
+        (doSelect)="changeSelectItem($event)"
+        [(ngModel)]="language3"
+      >
+      </mod-select>
+    </div>
+  </div>
+  <!-- comment components -->
+  <div class="grid grid-cols-3 gap-8 mb-8">
+    <!-- escalate button -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold">Task Picker</p>
+      <mod-task-picker (onChangeTask)="selectTask($event)"></mod-task-picker>
+    </div>
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold">Searchable Select</p>
+      <mod-select
+        [(ngModel)]="language4"
+        [items]="languages"
+        valueField="code"
+        displayField="name"
+        dir="top"
+        [isClickOpen]="true"
+        [searchable]="true"
+      ></mod-select>
+    </div>
+  </div>
+  <div>
+    <div class="bg-surface p-4 w-full mb-8">
+      <p class="text-md text-on-background font-bold">Pagination</p>
+      <div class="h-64 overflow-y-auto scrollbar">
+        <div
+          class="flex items-center font-normal text-base leading-6 font-body text-on-background py-3 bg-surface rounded-sm mb-1"
+          *ngFor="
+            let item of items
+              | paginate
+                : {
+                    itemsPerPage: countPerPage,
+                    currentPage: currentPage,
+                    totalItems: totalCount
+                  }
+          "
+        >
+          <span>{{ item }}</span>
+        </div>
+      </div>
+
+      <div class="flex">
+        <mod-pagination-controls (pageChange)="currentPage = $event">
+        </mod-pagination-controls>
+        <div class="ml-12">
+          <mod-pagination-counts
+            (pageCountChange)="countPerPage = $event"
+            [countArray]="perPageCounts"
+            [currentIndex]="perPageCounts.indexOf(countPerPage)"
+          >
+          </mod-pagination-counts>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-3 gap-8 mb-8">
+    <!-- option-button-group component -->
+    <div class="bg-surface p-4">
+      <p class="text-md text-on-background font-bold mb-4">
+        Option Button Group
+      </p>
+      <div class="mb-6">
+        <p class="text-sm mb-2">Default type</p>
+        <mod-option-button-group
+          [options]="topicChipLayoutOptions"
+          [value]="topicChipLayout"
+          (valueChange)="topicChipLayout = $event"
+        ></mod-option-button-group>
+      </div>
+
+      <div>
+        <p class="text-sm mb-2">Secondary type</p>
+        <mod-option-button-group
+          type="secondary"
+          [options]="topicChipLayoutOptions"
+          [value]="topicChipLayout"
+          (valueChange)="topicChipLayout = $event"
+        ></mod-option-button-group>
+      </div>
+    </div>
+
+    <!-- toggle slider -->
+    <div class="bg-surface p-4 mb-8">
+      <p class="text-md text-on-background font-bold mb-4">
+        Toggle Slider Component
+      </p>
+      <!-- <mod-topic-pick-risk-level [topics]="topics"></mod-topic-pick-risk-level> -->
+      <mod-toggle
+        label="Show Topics"
+        [isDisabled]="false"
+        labelClass="text-on-neutral"
+        [defaultActive]="true"
+        (_onChanged)="onToggle($event)"
+      ></mod-toggle>
+    </div>
+  </div>
+
+  <!-- topic table columns -->
+  <div class="bg-surface p-4 w-2/3 mb-8">
+    <p class="text-md text-on-background font-bold mb-4">
+      Topic Inline Chip List
+    </p>
+    <div class="w-full">
+      <mod-topic-chip-list
+        [topicView]="topicView"
+        [topics]="topicTableColumns"
+        [readOnly]="true"
+        [policyGuides]="defaultPolicyGuide"
+      >
+      </mod-topic-chip-list>
+      <button
+        class="bg-primary text-on-primary font-body font-bold mt-4 p-2 mr-2"
+        (click)="topicView = 'EXPAND'"
+      >
+        Expand
+      </button>
+      <button
+        class="bg-primary text-on-primary font-body font-bold mt-4 p-2 mr-2"
+        (click)="topicView = 'MINIMIZE'"
+      >
+        Minimize
+      </button>
+      <button
+        class="bg-primary text-on-primary font-body font-bold mt-4 p-2"
+        (click)="topicView = 'EXPAND_POLICY_GUIDE'"
+      >
+        Expanded Policy Guides
+      </button>
+    </div>
+  </div>
+</div>

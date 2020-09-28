@@ -1,0 +1,32 @@
+:host {
+  margin: var(--section-padding);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 16rem;
+}
+
+.loader,
+.error {
+  margin-bottom: var(--button-spacing);
+  text-align: center;
+}
+
+.loader svg {
+  transform: scale(1.4);
+
+  path,
+  rect {
+    fill: var(--color-secondary);
+  }
+}
+
+.error i.mdi {
+  color: var(--color-secondary);
+}
+
+.error-text {
+  color: var(--error-indicator-text-fg);
+  font-size: 20px;
+}

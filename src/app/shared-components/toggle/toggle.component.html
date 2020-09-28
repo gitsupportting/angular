@@ -1,0 +1,24 @@
+<button
+  class="flex items-center cursor-pointer"
+  (click)="onClick()"
+  [ngClass]="{ 'opacity-50 cursor-not-allowed': isDisabled }"
+>
+  <div
+    class="w-10 h-4 relative bg-toggle-bg rounded-lg inline-block transition-all duration-200 ease-in-out"
+    [ngClass]="{ isActive: isActive }"
+    data-test="toggle-slider"
+  >
+    <span
+      class="ball bg-toggle-on-bg inline-block rounded-full absolute left-0 top-1/2 w-{{
+        ballWidthAsTailwind
+      }} h-{{
+        ballWidthAsTailwind
+      }} transform -translate-y-1/2 transition-all duration-200 ease-in-out"
+      [style]="isActive ? ballActiveStyle : ''"
+    ></span>
+  </div>
+
+  <p *ngIf="label" class="ml-3 mb-0 text-sm {{ labelClass }}">
+    {{ label }}
+  </p>
+</button>

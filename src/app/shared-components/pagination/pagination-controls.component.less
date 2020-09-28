@@ -1,0 +1,32 @@
+.mod-pagination::before,
+.mod-pagination::after {
+  content: ' ';
+  display: table;
+}
+
+.mod-pagination::after {
+  clear: both;
+}
+
+.mod-pagination .show-for-sr {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.mod-pagination .small-screen {
+  display: none;
+}
+
+@media screen and (max-width: 601px) {
+  .mod-pagination.responsive .small-screen {
+    display: inline-block;
+  }
+
+  .mod-pagination.responsive
+    li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
+    display: none;
+  }
+}

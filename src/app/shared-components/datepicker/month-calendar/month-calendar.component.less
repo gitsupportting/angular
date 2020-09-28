@@ -1,0 +1,21 @@
+@import '../common/styles/variables';
+
+& {
+  mod-month-calendar {
+    // display: inline-block;
+
+    // .mod-month-calendar-container {
+    //   background: @c-light-black;
+    // }
+
+    .mod-calendar-month {
+      width: @basic-height * 7 / 4;
+      height: @basic-height * 7 / 4;
+
+      &.mod-selected {
+        background: @c-primary;
+        color: @c-primary-fg;
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+<div
+  modSelectBox
+  [active]="active"
+  [key]="key"
+  id="{{ 'select-box-' + key }}"
+  [selectItems]="selectItems"
+  [isMultiple]="isMultiple"
+  class="px-4 relative cursor-pointer select-none"
+  [ngClass]="{
+    'rounded-b-none': active,
+    'bg-neutral': active,
+    'rounded-t-sm': active,
+    'rounded-l': !active,
+    'bg-surface': !active,
+    'z-20': active
+  }"
+>
+  <button
+    #selectLabel
+    id="{{ 'select-box-label-' + key }}"
+    (click)="active = !active"
+    class="btn w-full relative"
+    aria-haspopup="listbox"
+    aria-labelledby="select_ele select_label"
+  >
+    <span
+      class="btn__content w-full flex items-center justify-between px-4 py-2"
+      tabindex="-1"
+    >
+      <span class="text-sm">{{ label }}</span>
+      <i
+        class="mdi mdi-chevron-down ml-3 duration-300 origin-center transform"
+        [ngClass]="{ '-rotate-180': active }"
+      ></i>
+    </span>
+  </button>
+
+  <button
+    #container
+    class="py-3 absolute bottom-0 transform translate-y-full left-0 rounded-b-sm bg-neutral overflow-y-auto scrollbar w-full focus:outline-none z-20"
+    id="{{ 'select-box-container-' + key }}"
+    tabindex="-1"
+    role="listbox"
+    aria-labelledby="select_ele"
+    aria-expanded="false"
+    [style.max-height]="optionWrapperMaxHeight"
+    [ngClass]="{
+      hidden: !active
+    }"
+    (click)="!isMultiple && (active = !active)"
+  >
+    <ng-content></ng-content>
+  </button>
+
+  <!-- Overlay for hiding the menu on click -->
+  <div
+    #overlay
+    id="{{ 'select-box-overlay-' + key }}"
+    *ngIf="active"
+    class="fixed w-full h-full top-0 right-0 bottom-0 left-0 z-10 bg-on-background opacity-50 md:bg-transparent"
+    (click)="active = !active"
+  ></div>
+</div>

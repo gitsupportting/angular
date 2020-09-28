@@ -1,0 +1,23 @@
+@import '../../../_utils.less';
+
+:host {
+  --background: #111212;
+  --on-background: #ffffff;
+  --primary: #292e2e;
+  --on-primary: #999999;
+  --on-active: #1b1f22;
+  --secondary: #636d73;
+
+  :host-context([data-theme='light']) {
+    --background: #fff;
+    --on-background: #343434;
+  }
+}
+
+@array: on-background, background, primary, on-primary, on-active, secondary;
+
+.GenClassFromVariableColor(@array, length(@array));
+
+.topic-item:hover {
+  color: var(--on-active);
+}

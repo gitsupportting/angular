@@ -1,0 +1,17 @@
+import { HttpUrlEncodingCodec } from '@angular/common/http';
+/**
+* CustomHttpUrlEncodingCodec
+* Fix plus sign (+) not encoding, so sent as blank space
+* See: https://github.com/angular/angular/issues/11058#issuecomment-247367318
+*/
+export class CustomHttpUrlEncodingCodec extends HttpUrlEncodingCodec {
+    encodeKey(k) {
+        k = super.encodeKey(k);
+        return k.replace(/\+/gi, '%2B');
+    }
+    encodeValue(v) {
+        v = super.encodeValue(v);
+        return v.replace(/\+/gi, '%2B');
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZW5jb2Rlci5qcyIsInNvdXJjZVJvb3QiOiJuZzovL2xhbmd1YWdlLXRhc2tzLXN3YWdnZXItY2xpZW50LyIsInNvdXJjZXMiOlsiZW5jb2Rlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBSSxPQUFPLEVBQUUsb0JBQW9CLEVBQUUsTUFBTSxzQkFBc0IsQ0FBQztBQUVoRTs7OztFQUlFO0FBQ0YsTUFBTSxPQUFPLDBCQUEyQixTQUFRLG9CQUFvQjtJQUNoRSxTQUFTLENBQUMsQ0FBUztRQUNmLENBQUMsR0FBRyxLQUFLLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ3ZCLE9BQU8sQ0FBQyxDQUFDLE9BQU8sQ0FBQyxNQUFNLEVBQUUsS0FBSyxDQUFDLENBQUM7SUFDcEMsQ0FBQztJQUNELFdBQVcsQ0FBQyxDQUFTO1FBQ2pCLENBQUMsR0FBRyxLQUFLLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ3pCLE9BQU8sQ0FBQyxDQUFDLE9BQU8sQ0FBQyxNQUFNLEVBQUUsS0FBSyxDQUFDLENBQUM7SUFDcEMsQ0FBQztDQUNKIiwic291cmNlc0NvbnRlbnQiOlsiICAgIGltcG9ydCB7IEh0dHBVcmxFbmNvZGluZ0NvZGVjIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uL2h0dHAnO1xyXG5cclxuLyoqXHJcbiogQ3VzdG9tSHR0cFVybEVuY29kaW5nQ29kZWNcclxuKiBGaXggcGx1cyBzaWduICgrKSBub3QgZW5jb2RpbmcsIHNvIHNlbnQgYXMgYmxhbmsgc3BhY2VcclxuKiBTZWU6IGh0dHBzOi8vZ2l0aHViLmNvbS9hbmd1bGFyL2FuZ3VsYXIvaXNzdWVzLzExMDU4I2lzc3VlY29tbWVudC0yNDczNjczMThcclxuKi9cclxuZXhwb3J0IGNsYXNzIEN1c3RvbUh0dHBVcmxFbmNvZGluZ0NvZGVjIGV4dGVuZHMgSHR0cFVybEVuY29kaW5nQ29kZWMge1xyXG4gICAgZW5jb2RlS2V5KGs6IHN0cmluZyk6IHN0cmluZyB7XHJcbiAgICAgICAgayA9IHN1cGVyLmVuY29kZUtleShrKTtcclxuICAgICAgICByZXR1cm4gay5yZXBsYWNlKC9cXCsvZ2ksICclMkInKTtcclxuICAgIH1cclxuICAgIGVuY29kZVZhbHVlKHY6IHN0cmluZyk6IHN0cmluZyB7XHJcbiAgICAgICAgdiA9IHN1cGVyLmVuY29kZVZhbHVlKHYpO1xyXG4gICAgICAgIHJldHVybiB2LnJlcGxhY2UoL1xcKy9naSwgJyUyQicpO1xyXG4gICAgfVxyXG59XHJcblxyXG4iXX0=

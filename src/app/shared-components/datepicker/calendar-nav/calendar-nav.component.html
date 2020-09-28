@@ -1,0 +1,72 @@
+<div
+  class="mod-calendar-nav-container relative box-border h-8 flex justify-between items-center"
+>
+  <div class="mod-nav-header">
+    <span
+      [attr.data-hidden]="isLabelClickable"
+      [hidden]="isLabelClickable"
+      [innerText]="label"
+      class="bg-neutral text-on-neutral text-base px-2"
+    >
+    </span>
+    <button
+      (click)="labelClicked()"
+      [attr.data-hidden]="!isLabelClickable"
+      [hidden]="!isLabelClickable"
+      [innerText]="label"
+      class="mod-nav-header-btn bg-neutral text-on-neutral text-base px-2"
+      type="button"
+    ></button>
+  </div>
+
+  <div class="mod-nav-btns-container flex items-center">
+    <div class="mod-calendar-nav-container-left flex items-center">
+      <button
+        (click)="leftSecondaryNavClicked()"
+        *ngIf="showLeftSecondaryNav"
+        [disabled]="leftSecondaryNavDisabled"
+        class="mod-calendar-secondary-nav-left outline-none"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-double-left text-2xl flex"></i>
+      </button>
+      <button
+        (click)="leftNavClicked()"
+        [attr.data-hidden]="!showLeftNav"
+        [disabled]="leftNavDisabled"
+        [hidden]="!showLeftNav"
+        class="mod-calendar-nav-left outline-none"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-left text-2xl flex"></i>
+      </button>
+    </div>
+    <button
+      (click)="onGoToCurrent.emit()"
+      *ngIf="showGoToCurrent"
+      class="mod-current-location-btn border-2 border-solid border-on-neutral rounded-full h-4 w-4 text-on-neutral bg-transparent"
+      type="button"
+    ></button>
+    <div class="mod-calendar-nav-container-right flex items-center">
+      <button
+        (click)="rightNavClicked()"
+        [attr.data-hidden]="!showRightNav"
+        [disabled]="rightNavDisabled"
+        [hidden]="!showRightNav"
+        class="mod-calendar-nav-right outline-none"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-right text-2xl flex"></i>
+      </button>
+      <button
+        (click)="rightSecondaryNavClicked()"
+        *ngIf="showRightSecondaryNav"
+        [disabled]="rightSecondaryNavDisabled"
+        class="mod-calendar-secondary-nav-right outline-none"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-double-right text-2xl flex"></i>
+      </button>
+    </div>
+  </div>
+</div>

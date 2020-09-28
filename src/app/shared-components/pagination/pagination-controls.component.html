@@ -1,0 +1,101 @@
+<mod-pagination-template
+  #pApi="paginationApi"
+  [id]="id"
+  [maxSize]="maxSize"
+  (pageChange)="pageChange.emit($event)"
+  (pageBoundsCorrection)="pageBoundsCorrection.emit($event)"
+>
+  <ul
+    class="mod-pagination ml-0 font-normal text-base leading-6 font-body"
+    role="navigation"
+    [attr.aria-label]="screenReaderPaginationLabel"
+    [class.responsive]="responsive"
+    *ngIf="!(autoHide && pApi.pages.length <= 1)"
+  >
+    <li
+      class="pagination-previous select-none mr-1 inline-block"
+      *ngIf="directionLinks"
+    >
+      <a
+        class="block outline-none py-2 px-4 bg-neutral text-on-neutral font-semibold hover:bg-secondary hover:text-on-secondary hover:font-bold rounded-l text-center cursor-pointer"
+        tabindex="0"
+        *ngIf="pApi.getCurrent() > 1"
+        (keyup.enter)="pApi.previous()"
+        (click)="pApi.previous()"
+        [attr.aria-label]="previousLabel + ' ' + screenReaderPageLabel"
+      >
+        {{ previousLabel }}
+        <span class="show-for-sr">{{ screenReaderPageLabel }}</span>
+      </a>
+      <a
+        class="block outline-none py-2 px-4 bg-neutral text-on-neutral text-center font-semibold hover:bg-neutral hover:text-on-neutral rounded-l cursor-default"
+        *ngIf="pApi.isFirstPage()"
+      >
+        <span>
+          {{ previousLabel }}
+          <span class="show-for-sr">{{ screenReaderPageLabel }}</span>
+        </span>
+      </a>
+    </li>
+
+    <li class="small-screen select-none mr-1 inline-block">
+      {{ pApi.getCurrent() }} / {{ pApi.getLastPage() }}
+    </li>
+
+    <li
+      class="select-none mr-1 inline-block"
+      [class.current]="pApi.getCurrent() === page.value"
+      [class.ellipsis]="page.label === '...'"
+      *ngFor="let page of pApi.pages"
+    >
+      <a
+        class="block outline-none py-2 px-4 text-center cursor-default bg-neutral text-on-neutral hover:bg-secondary hover:text-on-secondary hover:font-bold cursor-pointer"
+        tabindex="0"
+        (keyup.enter)="pApi.setCurrent(page.value)"
+        (click)="pApi.setCurrent(page.value)"
+        *ngIf="pApi.getCurrent() !== page.value"
+      >
+        <span class="show-for-sr">{{ screenReaderPageLabel }} </span>
+        <span>{{
+          page.label === '...' ? page.label : (page.label | number: '')
+        }}</span>
+      </a>
+      <ng-container *ngIf="pApi.getCurrent() === page.value">
+        <a
+          class="block outline-none py-2 px-4 bg-secondary text-on-secondary font-bold hover:bg-secondary hover:text-on-secondary hover:font-bold text-center cursor-default"
+        >
+          <span class="show-for-sr">{{ screenReaderCurrentLabel }} </span>
+          <span>{{
+            page.label === '...' ? page.label : (page.label | number: '')
+          }}</span>
+        </a>
+      </ng-container>
+    </li>
+
+    <li
+      class="pagination-next select-none mr-1 inline-block"
+      *ngIf="directionLinks"
+    >
+      <a
+        class="block outline-none py-2 px-4 bg-neutral text-on-neutral font-semibold hover:bg-secondary hover:text-on-secondary hover:font-bold rounded-r text-center cursor-pointer"
+        tabindex="0"
+        *ngIf="!pApi.isLastPage()"
+        (keyup.enter)="pApi.next()"
+        (click)="pApi.next()"
+        [attr.aria-label]="nextLabel + ' ' + screenReaderPageLabel"
+      >
+        {{ nextLabel }}
+        <span class="show-for-sr">{{ screenReaderPageLabel }}</span>
+      </a>
+      <a
+        *ngIf="pApi.isLastPage()"
+        class="block outline-none py-2 px-4 bg-neutral text-on-neutral font-semibold hover:bg-neutral hover:text-on-neutral rounded-r cursor-default text-center"
+      >
+        <span>
+          {{ nextLabel }}
+          <span class="show-for-sr">{{ screenReaderPageLabel }}</span>
+        </span>
+      </a>
+    </li>
+  </ul>
+</mod-pagination-template>

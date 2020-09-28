@@ -1,0 +1,27 @@
+/*
+ * GenClassFromVariableColor
+ * This function can generate class from variable color of root or component scope
+ * At the moment, I just generate color and background-color
+ * Feel free to update it when you want to add more properties
+ */
+
+// Quick start:
+// @array: test-background, test-secondary;
+// .GenVariableColorToClass(@array, length(@array));
+
+.GenClassFromVariableColor(@array, @index) when ( @index > 0 ) {
+  .GenClassFromVariableColor(@array, (@index - 1));
+
+  @color: extract(@array, @index);
+  @colorVar: ~'--@{color}';
+
+  // generate background
+  .bg-@{color} {
+    background-color: var(@colorVar);
+  }
+
+  // generate the text color
+  .text-@{color} {
+    color: var(@colorVar);
+  }
+}

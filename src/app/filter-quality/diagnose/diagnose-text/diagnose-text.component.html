@@ -1,0 +1,103 @@
+<div
+  modGroupToken
+  [isShowGroupToken]="highLightData?.isShowViewDialog"
+  [selectedItems]="highLightData?.items"
+  id="diagnose-text-{{ keyboardId }}"
+  class="flex flex-wrap w-full p-4"
+  (mouseup)="eventMouseup()"
+  #diagnoseTextView
+>
+  <div
+    class="relative md:mr-4 mr-2 last:mr-0"
+    *ngFor="let word of wordDiagnosed; let key = index"
+    [class]="
+      highLightData?.isShowViewDialog &&
+      key === highLightData?.items.values().next().value
+        ? 'md:mb-28 mb-20'
+        : 'md:mb-8 mb-4'
+    "
+  >
+    <button
+      #wordOriginal
+      id="diagnose-text-word-origin-{{ key }}-{{ keyboardId }}"
+      class="md:px-5 md:py-2 md:mb-4 md:text-2xl px-3 py-2 mb-2 text-xl rounded-md cursor-pointer font-bold font-body text-diagnose-text-on-surface bg-diagnose-text-surface original border-2 break-all w-full"
+      (mouseup)="eventMouseup()"
+      (mouseover)="eventMouseover(key)"
+      (mousedown)="eventMouseDown($event, key)"
+      (touchend)="eventMouseup()"
+      (pan)="eventTouchPan($event)"
+      (touchstart)="eventMouseDown($event, key)"
+      attr.data-idx="diagnose-text-{{ key }}-{{ keyboardId }}"
+      [class]="
+        (highLightData?.selected)[key]
+          ? 'border-on-background'
+          : 'border-transparent'
+      "
+    >
+      {{ word?.original }}
+    </button>
+
+    <div
+      class="flex md:mb-4 md:text-2xl mb-2 text-xl rounded-md cursor-pointer font-bold font-body bg-risk-{{
+        word.level
+      }} text-on-risk relative solution break-all"
+      [ngClass]="{ isClick: activeSolution[key] === true }"
+      (click)="onClickSolution(key, activeSolution[key] === true)"
+      (mousedown)="preventDefault($event)"
+      #fragment
+    >
+      <!-- if the word text is empty let return the space character -->
+      <button
+        #wordSolution
+        id="diagnose-text-word-soluton-{{ key }}-{{ keyboardId }}"
+        class="w-full md:px-5 md:py-2 px-3 py-2 font-bold text-left"
+      >
+        {{ word?.solution || '&nbsp;' }}
+      </button>
+      <div
+        tabindex="-1"
+        class="detail-box shadow-3xl bg-diagnose-text-primary max-h-64 absolute bottom-0 transform translate-y-full left-0 z-10 overflow-y-auto rounded-b-sm cursor-pointer scrollbar"
+        #tokenList
+      >
+        <button
+          class="table-row token-row w-full"
+          *ngFor="let rule of word?.tokens; let keyRule = index"
+          [ngClass]="{
+            'bg-diagnose-text-primary-800': rule?.text === word?.solution
+          }"
+          (click)="onChangeToken(key, rule)"
+          id="diagnose-text-solution-{{ key }}-{{ keyRule }}-{{ keyboardId }}"
+        >
+          <div class="table-cell pl-2">
+            <span
+              class="w-6 inline-block text-center rounded-l-lg text-sm text-on-risk bg-risk-{{
+                (rule?.topics)[GENERAL_RISK]
+              }}"
+              >{{ (rule?.topics)[GENERAL_RISK] }}</span
+            >
+          </div>
+
+          <div class="table-cell py-5 w-full text-left">
+            <span
+              class="pl-3 pr-6 max-w-60 block h-100 text-base truncate text-diagnose-text-on-primary-constrast"
+              >{{ rule?.text }}</span
+            >
+          </div>
+
+          <div class="table-cell pr-2">
+            <span
+              class="mr-3 text-diagnose-text-on-primary truncate max-w- text-sm"
+              >{{ rule?.language }}</span
+            >
+          </div>
+        </button>
+      </div>
+    </div>
+    <ftq-diagnose-group-tokens
+      *ngIf="(highLightData?.selectedOriginals)[key]"
+      [data]="data"
+      #diagnoseGroupToken
+    >
+    </ftq-diagnose-group-tokens>
+  </div>
+</div>

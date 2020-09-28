@@ -1,0 +1,20 @@
+<div
+  class="language-tasks-home-header w-full my-0 mx-auto flex items-center justify-space-between"
+>
+  <div class="left-section flex-1">
+    <h3
+      class="title font-bold text-2xl leading-7 font-display text-on-background m-0 mb-3"
+    >
+      Language Tasks
+    </h3>
+    <mod-breadcrumbs class="mt-2" [breadcrumbs]="breadcrumbs"></mod-breadcrumbs>
+  </div>
+  <div class="right-section flex items-center">
+    <button
+      class="button bg-secondary text-on-primary leading-7"
+      [routerLink]="['/filter-quality/language-tasks/create']"
+    >
+      <span class="btn-label">New Task</span>
+    </button>
+  </div>
+</div>

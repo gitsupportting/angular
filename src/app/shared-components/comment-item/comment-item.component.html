@@ -1,0 +1,82 @@
+<div
+  class="comment-component"
+  [ngClass]="{ 'pt-4 pb-8 border-b border-solid border-divider': isSmall }"
+>
+  <div class="comment-header flex items-center mb-4">
+    <span
+      class="avatar bg-neutral flex rounded-full items-center justify-center mr-4"
+      [ngClass]="{
+        'w-10 h-10 text-base': isSmall,
+        'w-12 h-12 text-lg': !isSmall
+      }"
+    >
+      <i class="mdi mdi-account text-on-neutral"></i>
+    </span>
+    <span
+      class="font-bold text-lg leading-10 font-display flex-1 text-on-background"
+      >{{comment.moderatorId}}</span
+    >
+    <div class="flex" *ngIf="moderatorId == comment.moderatorId || isAdmin">
+      <button
+        class="flex bg-neutral text-on-neutral hover:bg-secondary hover:text-on-secondary items-center justify-center rounded-sm cursor-pointer w-10 h-10"
+        (click)="onEdit()"
+        *ngIf="!isEdit"
+        aria-label="Edit"
+      >
+        <i class="mdi mdi-pencil"></i>
+      </button>
+      <button
+        class="flex bg-neutral text-on-neutral hover:bg-secondary hover:text-on-secondary items-center justify-center rounded-sm cursor-pointer w-10 h-10"
+        (click)="onSave()"
+        *ngIf="isEdit"
+        aria-label="Save"
+      >
+        <i class="mdi mdi-content-save"></i>
+      </button>
+      <button
+        class="flex bg-neutral text-on-neutral hover:bg-secondary hover:text-on-secondary items-center justify-center rounded-sm cursor-pointer w-10 h-10 ml-6"
+        (click)="onDelete()"
+        *ngIf="!isEdit"
+        aria-label="Delete"
+      >
+        <i class="mdi mdi-delete"></i>
+      </button>
+      <button
+        class="flex bg-neutral text-on-neutral hover:bg-secondary hover:text-on-secondary items-center justify-center rounded-sm cursor-pointer w-10 h-10 ml-6"
+        (click)="onCancel()"
+        *ngIf="isEdit"
+        aria-label="Cancel"
+      >
+        <i class="mdi mdi-close-thick"></i>
+      </button>
+      <button
+        [ngClass]="{
+          'bg-secondary text-on-secondary': comment.resolved,
+          'bg-neutral text-on-neutral': !comment.resolved
+        }"
+        class="flex hover:bg-secondary hover:text-on-secondary items-center justify-center rounded-sm cursor-pointer w-10 h-10 ml-6"
+        (click)="onResolve()"
+        aria-label="Resolve"
+      >
+        <i class="mdi mdi-check-bold"></i>
+      </button>
+    </div>
+  </div>
+  <div
+    class="comment font-bold text-base leading-6 font-display"
+    [ngClass]="{ 'ml-0': isSmall, 'ml-16': !isSmall }"
+    *ngIf="!isEdit"
+  >
+    <span class="text text-on-neutral">{{ comment?.text }}</span>
+  </div>
+  <div
+    class="comment edit-textarea"
+    [ngClass]="{ 'ml-0': isSmall, 'ml-16': !isSmall }"
+    *ngIf="isEdit"
+  >
+    <textarea
+      class="edit-text border border-solid border-neutral text-on-neutral w-full h-32 rounded-sm p-4 mt-0 mb-0 resize-y bg-transparent"
+      [(ngModel)]="comment.text"
+    ></textarea>
+  </div>
+</div>

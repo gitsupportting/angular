@@ -1,0 +1,34 @@
+<div class="mod-month-calendar-container">
+  <mod-calendar-nav
+    (onGoToCurrent)="goToCurrent()"
+    (onLabelClick)="toggleCalendarMode()"
+    (onLeftNav)="onLeftNavClick()"
+    (onLeftSecondaryNav)="onLeftSecondaryNavClick()"
+    (onRightNav)="onRightNavClick()"
+    (onRightSecondaryNav)="onRightSecondaryNavClick()"
+    [isLabelClickable]="componentConfig.isNavHeaderBtnClickable"
+    [label]="navLabel"
+    [showGoToCurrent]="shouldShowCurrent()"
+    [showLeftNav]="showLeftNav"
+    [showLeftSecondaryNav]="showSecondaryLeftNav"
+    [showRightNav]="showRightNav"
+    [showRightSecondaryNav]="showSecondaryRightNav"
+    [theme]="theme"
+  >
+  </mod-calendar-nav>
+
+  <div class="mod-calendar-wrapper">
+    <div *ngFor="let monthRow of yearMonths" class="mod-months-row">
+      <button
+        (click)="monthClicked(month)"
+        *ngFor="let month of monthRow"
+        [attr.data-date]="month.date.format(componentConfig.format)"
+        [disabled]="month.disabled"
+        [innerText]="month.text"
+        [ngClass]="getMonthBtnCssClass(month)"
+        class="mod-calendar-month box-border cursor-pointer"
+        type="button"
+      ></button>
+    </div>
+  </div>
+</div>

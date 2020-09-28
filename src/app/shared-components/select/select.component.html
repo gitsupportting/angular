@@ -1,0 +1,101 @@
+<div class="w-full mod-select" [ngClass]="dir">
+  <span
+    class="app-select multi inline-block relative bg-surface w-full rounded-sm leading-6"
+    (mouseenter)="!isClickOpen && (isOpenList = true)"
+    (mouseleave)="!isClickOpen && (isOpenList = false)"
+    *ngIf="multiselect"
+  >
+    <button
+      class="relative w-full flex p-3 pr-6"
+      (click)="isClickOpen && (isOpenList = !isOpenList)"
+    >
+      <div class="selected-items flex box-border w-full overflow-hidden h-6">
+        <span
+          class="label-text leading-6 h-6 flex items-center text-sm py-0 px-1 mr-1 border border-solid border-neutral whitespace-no-wrap"
+          *ngFor="let selected of _selectedItem"
+        >
+          {{ displayField ? selected[displayField] : selected.label }}
+        </span>
+      </div>
+      <i
+        class="mdi mdi-chevron-down text-2xl ml-3 duration-300 origin-center transform text-on-neutral absolute"
+        [ngClass]="{ '-rotate-180': isOpenList }"
+      ></i>
+    </button>
+
+    <ul
+      class="item-list scrollbar absolute w-full list-none py-6 px-0 rounded-sm r-0 z-10 bg-surface overflow-y-auto"
+      *ngIf="items && items.length && isOpenList"
+    >
+      <li *ngFor="let item of items" >
+        <button
+          class="p-3 flex text-sm items-center hover:bg-secondary hover:text-surface-alt w-full text-left"
+          [ngClass]="{ 'text-surface-alt bg-secondary': _selectedItem.indexOf(item) > -1 }"
+          (click)="onClick(item)">
+          <span class="flex-1 truncate">
+            {{displayField ? item[displayField] : item.label}}
+          </span>
+          <i
+            class="mdi mdi-check text-base"
+            *ngIf="_selectedItem.indexOf(item) > -1"
+          ></i>
+        </button>
+      </li>
+    </ul>
+  </span>
+  <span
+    class="app-select inline-block relative bg-surface w-full rounded-sm leading-6"
+    (mouseenter)="!isClickOpen && (isOpenList = true)"
+    (mouseleave)="!isClickOpen && (isOpenList = false)"
+    *ngIf="!multiselect"
+  >
+    <button
+      class="relative w-full flex p-3 pr-6"
+      (click)="isClickOpen && (isOpenList = !isOpenList)"
+    >
+      <span
+        class="label-text leading-6 h-6 block mr-3 text-sm truncate"
+        *ngIf="!searchable"
+      >
+        {{ displayField ? _selectedItem[displayField] : _selectedItem.label }}
+      </span>
+      <input
+        #input
+        class="leading-6 h-6 block mr-3 text-sm outline-none flex-1 bg-transparent truncate"
+        [value]="_selectedItem[displayField] ? _selectedItem[displayField] : ''"
+        *ngIf="searchable"
+        (input)="searchTask($event.target.value)"
+        (blur)="onBlur()"
+      />
+      <i
+        class="mdi mdi-chevron-down text-2xl ml-3 duration-300 origin-center transform text-on-neutral absolute"
+        [ngClass]="{ '-rotate-180': isOpenList }"
+      ></i>
+    </button>
+
+    <ul
+      class="item-list scrollbar absolute w-full list-none py-6 px-0 rounded-sm r-0 z-10 bg-surface overflow-y-auto"
+      *ngIf="items && items.length && isOpenList"
+    >
+      <li *ngFor="let item of items">
+        <button
+          class="p-3 flex text-sm items-center hover:bg-secondary hover:text-surface-alt w-full text-left"
+          [ngClass]="{ 'text-surface-alt bg-secondary': item[valueField] == _selectedItem[valueField] }"
+          (click)="onClick(item)">
+          <span class="flex-1 truncate">{{
+            displayField ? item[displayField] : item.label
+          }}</span>
+          <i
+            class="mdi mdi-check text-base"
+            *ngIf="item[valueField] == _selectedItem[valueField]"
+          ></i>
+        </button>
+      </li>
+    </ul>
+  </span>
+  <div
+    class="fixed top-0 bottom-0 left-0 right-0"
+    (click)="isOpenList = false"
+    *ngIf="isOpenList && isClickOpen"
+  ></div>
+</div>

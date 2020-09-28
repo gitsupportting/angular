@@ -1,0 +1,21 @@
+<mod-day-calendar
+  #dayCalendar
+  (onGoToCurrent)="onGoToCurrent.emit()"
+  (onLeftNav)="onLeftNavClick($event)"
+  (onRightNav)="onRightNavClick($event)"
+  (onSelect)="dateSelected($event)"
+  [config]="componentConfig"
+  [displayDate]="displayDate"
+  [ngModel]="_selected"
+  [theme]="theme"
+>
+</mod-day-calendar>
+<mod-time-select
+  #timeSelect
+  (onChange)="timeChange($event)"
+  [config]="componentConfig"
+  [ngModel]="_selected"
+  [theme]="theme"
+  class="block border-t border-solid border-neutral"
+>
+</mod-time-select>

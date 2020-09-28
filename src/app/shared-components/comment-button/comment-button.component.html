@@ -1,0 +1,12 @@
+<a
+  class="relative inline-block bg-background h-8 w-8 leading-8 rounded-sm text-center outline-none cursor-pointer"
+  (click)="clickEvent()"
+>
+  <i class="mdi mdi-chat-processing text-on-neutral"></i>
+  <span
+    class="absolute block h-4 w-4 font-bold text-sm leading-4 rounded-full bg-secondary text-surface-alt"
+    style="top: -3px; right: -4px;"
+    *ngIf="commentDetail.unresolved"
+    >{{ commentDetail.unresolved }}</span
+  >
+</a>

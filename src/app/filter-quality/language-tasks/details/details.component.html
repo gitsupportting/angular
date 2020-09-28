@@ -1,0 +1,209 @@
+<div id="language-task-details" class="h-full flex flex-col">
+  <mod-language-tasks-details-header
+    [pageType]="pageType"
+    (taskActionEvent)="changeTaskAction($event)"
+  ></mod-language-tasks-details-header>
+  <div class="language-task-details py-8 flex-1 flex flex-col justify-between">
+    <div>
+      <div [ngClass]="{ 'mb-12': pageType === 0, 'mb-6': pageType !== 0 }">
+        <p
+          class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+        >
+          Name
+        </p>
+        <span
+          class="text leading-8 font-normal text-lg leading-6 font-body text-on-background"
+          *ngIf="pageType === 0"
+          >{{ task && task.data.task }}</span
+        >
+        <input
+          [(ngModel)]="taskFormData.data.task"
+          class="w-full rounded-sm border border-solid border-neutral bg-transparent font-normal text-base leading-6 font-body text-on-background p-3"
+          *ngIf="pageType !== 0"
+        />
+      </div>
+      <div class="mb-6">
+        <p
+          class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+        >
+          Instructions
+        </p>
+        <span
+          class="text leading-8 font-normal text-lg leading-6 font-body text-on-background"
+          *ngIf="pageType === 0"
+          >{{ task && task.data.instructions }}</span
+        >
+        <textarea
+          [(ngModel)]="taskFormData.data.instructions"
+          class="h-32 w-full rounded-sm border border-solid border-neutral bg-transparent font-normal text-base leading-6 font-body text-on-background p-3 resize-y"
+          *ngIf="pageType !== 0"
+        ></textarea>
+      </div>
+      <div
+        class="mb-6 py-6 border-t-2 border-b-2 border-solid border-divider flex"
+        *ngIf="pageType === 0"
+      >
+        <div class="mr-12 flex-grow-0 flex-shrink w-64">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Due Date
+          </p>
+          <span
+            class="leading-8 font-normal text-lg leading-6 font-body text-on-background"
+            >{{ dueDate | date: 'MM-dd-y' }}</span
+          >
+        </div>
+        <div class="mr-12 flex-grow-0 flex-shrink w-64">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Languages
+          </p>
+          <span
+            class="leading-8 font-normal text-lg leading-6 font-body text-on-background"
+            >{{
+              task &&
+              task.queueItem.language &&
+              task.queueItem.language.language
+                ? task.queueItem.language.language
+                : 'All'
+            }}</span
+          >
+        </div>
+        <div class="mr-12 flex-grow-0 flex-shrink w-64">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Assign To
+          </p>
+          <span
+            class="leading-8 font-normal text-lg leading-6 font-body text-on-background"
+            >{{
+              task &&
+              task.queueItem.checkout &&
+              task.queueItem.checkout.moderatorId
+                ? task.queueItem.checkout.moderatorId
+                : 'Not Assigned'
+            }}</span
+          >
+        </div>
+        <div class="flex-grow-0 flex-shrink w-64">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Accounts
+          </p>
+          <span
+            class="leading-8 font-normal text-lg leading-6 font-body text-on-background"
+            >Admin Only</span
+          >
+        </div>
+      </div>
+      <div
+        class="mb-6 py-6 border-b-2 border-solid border-divider flex"
+        *ngIf="pageType !== 0"
+      >
+        <div class="mr-12">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Due Date
+          </p>
+          <mod-date-picker
+            class="w-64"
+            id="picker"
+            #dateComponent
+            [config]="config"
+            [(ngModel)]="taskFormData.data.dueDate"
+          >
+          </mod-date-picker>
+        </div>
+        <div class="mr-12">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Languages
+          </p>
+          <mod-language-button-group
+            [multiple]="pageType == 2"
+            [(ngModel)]="taskFormData.language"
+          ></mod-language-button-group>
+        </div>
+        <div class="mr-12">
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Assign To
+          </p>
+          <mod-select
+            class="w-64 flex"
+            [items]="assignOptions"
+            [(ngModel)]="taskFormData.data.assign"
+            name="assign"
+            ngDefaultControl
+          ></mod-select>
+        </div>
+        <div>
+          <p
+            class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+          >
+            Accounts
+          </p>
+          <mod-select
+            class="w-64 flex"
+            [items]="accountOptions"
+            [multiselect]="pageType == 2"
+            [(ngModel)]="taskFormData.clientId"
+          ></mod-select>
+        </div>
+      </div>
+      <div *ngIf="comments.length">
+        <p
+          class="font-semibold text-base leading-6 font-body text-on-neutral mb-4"
+        >
+          Comments
+        </p>
+        <div
+          class="pb-10 border-b-2 border-solid border-divider"
+          *ngFor="let comment of comments"
+        >
+          <mod-comment-item
+            [queueId]="'task'"
+            [contentId]="task && task.queueItem.contentId"
+            [comment]="comment"
+          ></mod-comment-item>
+        </div>
+      </div>
+    </div>
+    <div class="buttons-wrapper mt-24">
+      <button
+        class="button bg-secondary text-on-background mr-4 font-semibold text-sm leading-6 font-display"
+        *ngIf="pageType !== 0"
+        (click)="onSave()"
+      >
+        <span class="btn-label">Save</span>
+      </button>
+      <button
+        class="button bg-neutral text-on-background mr-4 font-semibold text-sm leading-6 font-display"
+        *ngIf="pageType != 2"
+        (click)="onStart()"
+      >
+        <span class="btn-label">Start</span>
+      </button>
+      <button
+        class="button bg-neutral text-on-background mr-4 font-semibold text-sm leading-6 font-display"
+        *ngIf="pageType != 2"
+        (click)="onStop()"
+      >
+        <span class="btn-label">Stop</span>
+      </button>
+      <button
+        class="button bg-surface text-on-background font-semibold text-sm leading-6 font-display"
+        [routerLink]="['/filter-quality/language-tasks']"
+      >
+        <span class="btn-label">Cancel</span>
+      </button>
+    </div>
+  </div>
+</div>

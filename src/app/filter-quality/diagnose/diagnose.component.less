@@ -1,0 +1,35 @@
+@import '../../../_utils.less';
+
+:host {
+  --diagnose-background: #111212;
+  --diagnose-on-background: #636d73;
+  --diagnose-on-background-constrast: #f4f4f4;
+  --diagnose-on-background-low-constrast: #999999;
+
+  --diagnose-surface: #292e2f;
+  --diagnose-on-surface: #f4f4f4;
+
+  --secondary: #58c1b8;
+  --diagnose-on-secondary: #1b1f22;
+
+  :host-context([data-theme='light']) {
+    --diagnose-background: #ffffff;
+    --diagnose-on-background: #636d73;
+    --diagnose-on-background-constrast: #333;
+  }
+}
+
+@array: diagnose-background, diagnose-on-background,
+  diagnose-on-background-constrast, diagnose-on-background-low-constrast,
+  diagnose-on-surface, diagnose-secondary, diagnose-on-secondary;
+
+.GenClassFromVariableColor(@array, length(@array));
+
+.border-gray {
+  border-color: #414d55;
+}
+
+mod-topic-chip::ng-deep i,
+ftq-policy-guide::ng-deep i {
+  font-size: 1.125rem;
+}

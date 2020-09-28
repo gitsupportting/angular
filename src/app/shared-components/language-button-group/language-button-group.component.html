@@ -1,0 +1,24 @@
+<div class="language-button-group flex" *ngIf="!multiple">
+  <button
+    class="cursor-pointer p-3 text-center block mr-2 hover:bg-secondary hover:text-on-primary w-16 last:rounded-r first:rounded-l"
+    [ngClass]="{
+      'bg-surface text-on-surface': _value !== item,
+      'bg-secondary text-on-primary': _value === item
+    }"
+    *ngFor="let item of languages; let i = index"
+    (click)="selectLanguage(item)"
+    >{{ item }}</button
+  >
+</div>
+<div class="language-button-group flex" *ngIf="multiple">
+  <button
+    class="cursor-pointer p-3 text-center block mr-2 hover:bg-secondary hover:text-on-primary w-16 last:rounded-r first:rounded-l"
+    [ngClass]="{
+      'bg-surface text-on-surface': _value?.indexOf(item) === -1,
+      'bg-secondary text-on-primary': _value?.indexOf(item) > -1
+    }"
+    *ngFor="let item of languages; let i = index"
+    (click)="selectLanguage(item)"
+    >{{ item }}</button
+  >
+</div>

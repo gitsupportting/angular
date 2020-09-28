@@ -1,0 +1,13 @@
+<mod-tooltip text="Diagnose how this phrase is seen by the filter">
+  <button
+    #diagnoseButton
+    id="diagnose-search-button"
+    class="bg-background py-2 min-w-34 rounded-md flex justify-center items-center"
+    (click)="onClick()"
+  >
+    <i class="mdi mdi-magnify mr-2 text-on-background text-xl"></i>
+    <span *ngIf="!minimized" class="text-sm text-on-background font-semibold"
+      >Diagnose</span
+    >
+  </button>
+</mod-tooltip>

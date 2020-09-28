@@ -1,0 +1,33 @@
+@import '../common/styles/variables';
+
+& {
+  mod-day-calendar {
+    display: inline-block;
+
+    .mod-calendar-weekday {
+      width: @basic-height;
+    }
+
+    .mod-calendar-day {
+      width: @basic-height;
+      height: @basic-height;
+    }
+
+    .mod-selected {
+      background: @c-primary;
+      color: @c-primary-fg;
+    }
+
+    .mod-prev-month,
+    .mod-next-month {
+      opacity: 0.5;
+    }
+
+    .mod-hide-near-month {
+      .mod-prev-month,
+      .mod-next-month {
+        visibility: hidden;
+      }
+    }
+  }
+}

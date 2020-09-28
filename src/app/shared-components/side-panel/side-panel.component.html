@@ -1,0 +1,116 @@
+<div
+  *ngIf="isShow"
+  class="w-full md:max-w-2xl overflow-y-auto fixed right-0 top-0 bottom-0 z-10"
+>
+  <!-- overlay -->
+  <div
+    class="overlay fixed right-0 top-0 w-full h-full"
+    (click)="onClose()"
+  ></div>
+
+  <!-- side-panel content -->
+  <div class="h-auto min-h-full bg-side-background md:p-6 p-4 relative z-2">
+    <h4
+      class="text-lg md:pb-8 md:mb-8 pb-4 mb-4 border-solid border-b-2 border-grey text-on-side-background"
+    >
+      Add it to the regression tests
+    </h4>
+
+    <p class="text-on-side-background text-sm md:mb-5 mb-3">
+      How should it be labelled
+    </p>
+    <mod-topic-pick-risk-level
+      class="md:mb-8 mb-6 flex justify-between"
+      [topics]="topics"
+      (changeRiskLevel)="onChangeLevel($event)"
+      [originTopics]="originTopics"
+    ></mod-topic-pick-risk-level>
+
+    <div class="flex md:mb-10 mb-6">
+      <!-- add topic box -->
+      <div class="w-1/2 pr-4">
+        <p class="text-on-side-background text-sm">Add Topics</p>
+        <mod-combo-box
+          [bindKey]="'id'"
+          [bindValue]="'name'"
+          [items]="topicAll"
+          [selectedItems]="topics"
+          [isSearchable]="true"
+          (itemChanged)="onChangeTopic($event)"
+          [isMultiple]="true"
+          [blackListItems]="topicBlackList"
+          [labelData]="comboBoxLabel"
+          [cssClass]="comboBoxClass"
+          key="side-panel-component-topics-{{ key }}"
+        >
+        </mod-combo-box>
+      </div>
+
+      <!-- add language box -->
+      <div class="w-1/2 pl-4">
+        <p class="text-on-side-background text-sm">Wrong Language?</p>
+        <mod-select-box
+          key="side-panel-component-language"
+          [class]="'min-w-18 bg-neutral-muted'"
+          [label]="languageSelected?.name"
+        >
+          <mod-option-primary
+            tabindex="-1"
+            role="option"
+            id="{{ 'side-panel-language-' + language.code }}"
+            [class]="'min-w-28 text-on-neutral'"
+            *ngFor="let language of languages"
+            [active]="language?.code === languageSelected?.code"
+            (click)="onLanguageChanged(language)"
+          >
+            {{ language?.name }}
+          </mod-option-primary>
+        </mod-select-box>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <label
+        for="comment"
+        class="text-on-side-background md:text-base text-sm inline-block mb-6"
+        >Leave a comment</label
+      >
+      <textarea
+        class="py-6 px-4 border-none block w-full bg-surface text-on-surface font-semi-bold text-sm"
+        name=""
+        id="comment-{{ key }}"
+        rows="4"
+        placeholder="Type your Comment (Optional)"
+        [(ngModel)]="comment"
+      ></textarea>
+    </div>
+
+    <div class="flex items-center flex-1">
+      <button
+        [disabled]="callingApi ? 'disabled' : null"
+        [class]="{ 'cursor-wait': callingApi }"
+        class="bg-primary text-on-primary min-w-30 p-3 rounded-md font-body font-semibold mr-4 text-sm"
+        (click)="apply()"
+      >
+        Apply
+      </button>
+      <button
+        class="bg-background text-on-background min-w-30 p-3 rounded-md font-body font-semibold mr-4 text-sm"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+    </div>
+
+    <!-- button close -->
+    <button
+      class="absolute top-0 right-0 md:mr-6 md:mt-5 mt-4 mr-4 flex items-center uppercase cursor-pointer"
+      (click)="onClose()"
+    >
+      <i class="mdi mdi-close text-on-side-background md:text-xl text-md"></i>
+      <span class="md:text-md md:ml-3 text-sm md-2 text-on-side-background"
+        >CLOSE</span
+      >
+    </button>
+  </div>
+</div>

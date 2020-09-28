@@ -1,0 +1,14 @@
+<span>
+  <mod-select
+    [(ngModel)]="selectedTask"
+    [items]="tasks"
+    valueField="task"
+    displayField="task"
+    dir="top"
+    [isClickOpen]="true"
+    [searchable]="true"
+    [aysncData]="true"
+    (getData)="getTasks($event)"
+    (doSelect)="selectTask($event)"
+  ></mod-select>
+</span>

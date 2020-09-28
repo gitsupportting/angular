@@ -1,0 +1,16 @@
+<div class="progress-bar flex justify-between items-center">
+  <span
+    class="w-1/4 pr-3 font-semibold text-on-background truncate text-md md:text-xl"
+    >{{ label }}</span
+  >
+  <div class="h-2 rounded-lg bg-neutral overflow-hidden w-full">
+    <div
+      [style.width]="percent"
+      class="progess-line bg-secondary h-full w-0 transition-all duration-500 ease-in-out"
+    ></div>
+  </div>
+  <span
+    class="percent-text text-right w-20 text-on-background font-semibold inline-block text-md md:text-xl"
+    >{{ percent }}</span
+  >
+</div>

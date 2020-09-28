@@ -1,0 +1,60 @@
+<mod-queue-wrapper heading="Audit Rules" [breadcrumbs]="breadcrumbs">
+  <div *ngFor="let item of queueItems" class="block mb-16">
+    <div class="panel" [class.p-4]="minimizeTopics">
+      <div class="sm:flex w-full justify-between items-end">
+        <!-- Rule text and topics -->
+        <div class="flex-grow sm:pr-4">
+          <mod-topic-chip-list
+            class="block"
+            [topics]="item.queueItem.topics"
+            [minimized]="minimizeTopics"
+            [readOnly]="true"
+          >
+            <div
+              class="font-display font-medium"
+              [class]="{
+                'text-xl': minimizeTopics,
+                'text-5xl': !minimizeTopics
+              }"
+            >
+              {{ item.data.text }}
+            </div>
+          </mod-topic-chip-list>
+        </div>
+
+        <div class="mt-4 sm:mt-0 text-xs">
+          <span class="opacity-50">
+            <i aria-hidden="true" class="mdi mdi-repeat"></i>
+            <ng-container i18n>
+              {{ item.data.onCount | number }} occurrences
+            </ng-container>
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-solid border-divider">
+        <mod-queue-item-tags
+          [tags]="item.changes.tags"
+          [initialTags]="item.queueItem.tags"
+          [topics]="item.changes.topics"
+          [minimizeTopics]="minimizeTopics"
+          [tagInfo]="tagInfo"
+          [readOnly]="!isReviewing"
+          (topicsUpdated)="onTopicsUpdated(item.queueItem.contentId, $event)"
+          (tagsUpdated)="onTagsUpdated(item.queueItem.contentId, $event)"
+        ></mod-queue-item-tags>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <div class="text-sm">Examples of this rule:</div>
+      <mod-example-list
+        class="block px-2"
+        [searchText]="item.data.text"
+        [highlightText]="item.data.text"
+        [readOnly]="false"
+        [showTopics]="false"
+      ></mod-example-list>
+    </div>
+  </div>
+</mod-queue-wrapper>

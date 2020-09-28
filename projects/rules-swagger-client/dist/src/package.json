@@ -1,0 +1,12 @@
+{
+  "main": "../bundles/rules-swagger-client-src.umd.js",
+  "module": "../fesm5/rules-swagger-client-src.js",
+  "es2015": "../fesm2015/rules-swagger-client-src.js",
+  "esm5": "../esm5/src/rules-swagger-client-src.js",
+  "esm2015": "../esm2015/src/rules-swagger-client-src.js",
+  "fesm5": "../fesm5/rules-swagger-client-src.js",
+  "fesm2015": "../fesm2015/rules-swagger-client-src.js",
+  "typings": "rules-swagger-client-src.d.ts",
+  "sideEffects": false,
+  "name": "rules-swagger-client/src"
+}

@@ -1,0 +1,89 @@
+<div class="body p-6 h-full flex flex-col justify-between bg-surface">
+  <div>
+    <p i18n class="text-xs text-on-neutral">
+      This is a recommended version of your rule. Best practice is to create
+      less rules that cover more by using the simplest form of the rule
+    </p>
+    <div class="font-bold text-2xl my-3">
+      <span *ngFor="let element of smartRule" [class]="element.class">{{
+        element.value
+      }}</span>
+    </div>
+    <div class="delimeter w-full h-px bg-neutral rounded"></div>
+    <div
+      class="flex flex-row content-center items-center py-3"
+      *ngFor="let spelling of smartSpelling"
+    >
+      <ng-container
+        *ngIf="dontShowArray && dontShowArray.indexOf(spelling.name) > -1"
+      >
+        <div
+          class="flex flex-row content-center w-1/4 bg-background h-12 items-center"
+          [ngClass]="{ 'opacity-50': !spelling.active }"
+        >
+          <i class="mdi mdi-bug mdi-24px" [ngClass]="spelling.class"></i>
+
+          <span
+            class="p-2 h-auto text-on-neutral content-center"
+            [id]="spelling.name"
+            [ngClass]="{ blink: spelling.active && blink }"
+          >
+            {{ spelling.name }}</span
+          >
+        </div>
+        <div
+          class="flex flex-row p-3 content-center w-full"
+          [ngClass]="{ 'opacity-50': !spelling.active }"
+        >
+          <span class="p-2"> {{ spelling.description }}</span>
+        </div>
+        <div class="flex flex-row p-3 content-center text-sm h-16">
+          <button
+            i18n
+            class="bg-secondary text-on-primary py-2 px-4 rounded"
+            (click)="onAccept(spelling.name)"
+          >
+            {{
+              !ruleSelected[spelling.name] ||
+              ruleSelected[spelling.name] !== 'accept'
+                ? 'Accept'
+                : 'Selected'
+            }}
+          </button>
+        </div>
+        <div class="flex flex-row p-3 content-center text-sm h-16">
+          <button
+            i18n
+            class="py-2 px-4 rounded bg-neutral text-on-neutral"
+            (click)="onReject(spelling.name)"
+          >
+            {{
+              !ruleSelected[spelling.name] ||
+              ruleSelected[spelling.name] !== 'reject'
+                ? 'Reject'
+                : 'Selected'
+            }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+    <div
+      *ngIf="!dontShowArray || dontShowArray.length === 0"
+      class="font-bold text-2xl my-3"
+    >
+      No recommendations
+    </div>
+  </div>
+  <div class="flex flex-row justify-end">
+    <div class="flex flex-row p-3 content-center text-sm h-16">
+      <button
+        i18n
+        class="py-2 px-4 rounded bg-secondary text-on-primary"
+        [ngClass]="{ 'cursor-not-allowed': !valid }"
+        (click)="onNextButton()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

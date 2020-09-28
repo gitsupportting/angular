@@ -1,0 +1,31 @@
+<button
+  class="app-checkbox block relative cursor-pointer select-none m-0"
+  [ngClass]="{
+    'w-5 h-5': !small,
+    'w-4 h-4': small
+  }"
+  (click)="toggleCheckbox()"
+  aria-label="Checkbox"
+>
+  <span
+    class="checkmark absolute w-5 h-5 top-0 left-0 border-2 border-solid rounded-sm"
+    [ngClass]="{
+      'w-5 h-5': !small,
+      'w-4 h-4': small,
+      'hover:border-secondary hover:bg-secondary': type == 'accent',
+      'border-secondary bg-secondary': type == 'accent' && _value,
+      'border-neutral': (type == 'accent' && !_value) || type != 'accent'
+    }"
+  ></span>
+  <i
+    class="mdi mdi-check-bold absolute top-0 block text-center"
+    [ngClass]="{
+      visible: _value,
+      invisible: !_value,
+      'w-5 h-5 leading-5 text-sm': !small,
+      'w-4 h-4 leading-4 text-xs': small,
+      'text-on-primary': type == 'accent'
+    }"
+  >
+  </i>
+</button>

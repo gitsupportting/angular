@@ -1,0 +1,12 @@
+{
+  "main": "../bundles/classify-text-swagger-client-src.umd.js",
+  "module": "../fesm5/classify-text-swagger-client-src.js",
+  "es2015": "../fesm2015/classify-text-swagger-client-src.js",
+  "esm5": "../esm5/src/classify-text-swagger-client-src.js",
+  "esm2015": "../esm2015/src/classify-text-swagger-client-src.js",
+  "fesm5": "../fesm5/classify-text-swagger-client-src.js",
+  "fesm2015": "../fesm2015/classify-text-swagger-client-src.js",
+  "typings": "classify-text-swagger-client-src.d.ts",
+  "sideEffects": false,
+  "name": "classify-text-swagger-client/src"
+}

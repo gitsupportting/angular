@@ -1,0 +1,295 @@
+<section id="diagnose" class="max-w-2xl max-w-screen-xl mx-auto md:px-4 pb-20">
+  <div class="px-5 md:px-0 mb-5">
+    <h3 class="title" role="heading" aria-level="1">Diagnose</h3>
+
+    <mod-breadcrumbs class="mt-2" [breadcrumbs]="breadcrumbs"></mod-breadcrumbs>
+  </div>
+
+  <mod-loading-indicator
+    class="col-span-2"
+    [loading]="isLoading"
+    [error]="isError"
+  >
+    <div
+      *ngIf="!isLoading && !isError"
+      class="diagnose-main-content flex flex-col w-full"
+    >
+      <div
+        *ngFor="let result of resultsSearched; let i = index"
+        class="py-4 col-gap-4 border-b border-gray"
+      >
+        <mod-loading-indicator
+          class="search-result-loading"
+          [loading]="result.isLoading"
+          [error]="result.isError"
+        >
+          <div
+            class="grid grid-cols-1 md:grid-cols-3 md:col-gap-4 w-full"
+            *ngIf="!result.isLoading && !result.isError"
+          >
+            <!-- fragments text box -->
+            <div class="col-span-3 md:col-span-3 lg:col-span-2 max-w-screen-lg">
+              <div class="bg-diagnose-background">
+                <ftq-diagnose-text
+                  keyboardId="{{ i }}"
+                  [extended]="result.extended"
+                ></ftq-diagnose-text>
+              </div>
+            </div>
+
+            <!-- sidebar box -->
+            <div
+              class="bg-diagnose-background col-span-1 xl:col-span-1 lg:col-span-1 md:col-span-3 sm:col-span-3 px-5 md:py-4"
+            >
+              <div
+                class="text-diagnose-on-background-constrast text-xl font-semibold mb-4"
+              >
+                Search #{{ i + 1 }}:
+                {{ getResultTitle(result.searchedParams) }}
+              </div>
+
+              <div class="flex mb-5 pb-4 border-b border-gray">
+                <!-- refresh search -->
+                <button
+                  class="flex-1 bg-neutral flex items-center justify-center font-bold font-body text-sm p-2 rounded leading-6"
+                  (click)="onRefresh(i)"
+                >
+                  <i
+                    class="mdi mdi-sync transform inline-block rotate-90 mr-1 text-xl text-on-neutral"
+                  ></i>
+                  Refresh
+                </button>
+
+                <!-- remove search result -->
+                <button
+                  class="flex-1 mx-3 bg-neutral flex items-center justify-center font-bold font-body text-sm p-2 rounded leading-6"
+                  (click)="onRemove(i)"
+                >
+                  <i class="mdi mdi-close mr-1 text-xl text-on-neutral"></i>
+                  Remove
+                </button>
+
+                <!-- toggle more button -->
+                <button
+                  *ngIf="result.isDeep; else moreButton"
+                  class="flex-1 bg-secondary text-on-secondary flex items-center justify-center font-bold font-body text-sm p-2 rounded leading-6"
+                  (click)="onToogleMore(i)"
+                >
+                  <i class="mdi mdi-minus mr-1 text-xl text-on-secondary"></i>
+                  Less
+                </button>
+                <ng-template #moreButton>
+                  <button
+                    class="flex-1 bg-neutral flex items-center justify-center font-bold font-body text-sm p-2 rounded leading-6"
+                    (click)="onToogleMore(i)"
+                  >
+                    <i class="mdi mdi-plus mr-1 text-xl text-on-neutral"></i>
+                    More
+                  </button>
+                </ng-template>
+                <!-- end toggle more button -->
+              </div>
+
+              <div class="grid grid-cols-2 gap-5">
+                <div>
+                  <h5 class="text-diagnose-on-background mb-4 text-sm">
+                    Topics
+                  </h5>
+                  <mod-topic-chip
+                    *ngFor="let topic of result.topics"
+                    class="block mb-3 last:mb-0 mr-2 last:mr-0 w-full topic-item rounded overflow-hidden"
+                    type="secondary"
+                    [topic]="topic"
+                    [readOnly]="true"
+                  ></mod-topic-chip>
+                </div>
+
+                <div>
+                  <h5 class="text-diagnose-on-background mb-4 text-sm">
+                    Policy Guides
+                  </h5>
+                  <ftq-policy-guide
+                    *ngFor="let policy of result.policies"
+                    class="block mb-3 last:mb-0 policy-item w-full rounded-sm overflow-hidden"
+                    [policy]="policy"
+                  >
+                  </ftq-policy-guide>
+                </div>
+              </div>
+
+              <div
+                class="flex items-center justify-between border-t border-gray pt-5 mt-4"
+              >
+                <mod-escalate-button
+                  class="w-1/3"
+                  buttonClass="w-full"
+                  key="UpdateRule-{{ i }}"
+                  [data]="result.escalateData"
+                >
+                </mod-escalate-button>
+                <button
+                  class="bg-secondary text-diagnose-on-secondary p-3 rounded font-body font-semibold mx-4 text-sm w-1/3"
+                >
+                  Gerkin Test
+                </button>
+                <button
+                  class="bg-primary text-on-primary mb-1 p-3 rounded-md font-body font-semibold text-sm w-1/3"
+                >
+                  Create Rule
+                </button>
+              </div>
+            </div>
+
+            <!-- failingFragments box -->
+            <div
+              *ngIf="result.isDeep"
+              class="deeper-box col-span-3 grid grid-cols-1 px-5 mt-4 md:pb-3 pt-4 md:pt-6 border-t border-gray md:px-0 md:grid-cols-3"
+              [@openClose]
+            >
+              <div class="col-span-3 md:col-span-2">
+                <p
+                  class="md:text-md text-sm text-diagnose-on-background-low-constrast md:mb-4 mb-0"
+                >
+                  Spelling Mistakes
+                </p>
+
+                <div
+                  class="bg-diagnose-background mb-8"
+                  *ngIf="result.mistakes.length; else emptyMistake"
+                >
+                  <p
+                    class="text-on-diagnose-background font-bold text-2xl p-3 mb-0 spelling-mistake-item"
+                    *ngFor="let mistake of result.mistakes"
+                  >
+                    {{ mistake }}
+                  </p>
+                </div>
+                <ng-template #emptyMistake>
+                  <p class="md:text-sm text-xs mb-0 p-3 mb-4">
+                    Not Found Any Spelling Mistakes
+                  </p>
+                </ng-template>
+
+                <p
+                  class="md:text-md text-sm text-diagnose-on-background-low-constrast md:mb-4 mb-0"
+                >
+                  What caused which tag
+                </p>
+                <div
+                  class="bg-diagnose-background py-2"
+                  *ngIf="result.tags.length; else emptyTag"
+                >
+                  <div
+                    class="flex flex-wrap items-center px-3 mb-2 last:mb-0"
+                    *ngFor="let tag of result.tags"
+                  >
+                    <div *ngFor="let topic of tag.topics" class="py-1 pr-4">
+                      <mod-topic-chip
+                        class="block last:mr-0 topic-item min-w-48 rounded overflow-hidden mr-4 w-50"
+                        type="secondary"
+                        [topic]="topic"
+                        [readOnly]="true"
+                      ></mod-topic-chip>
+                    </div>
+
+                    <span
+                      class="text-on-diagnose-background font-bold font-body md:text-lg text-md capitalize"
+                      >{{ tag.text }}</span
+                    >
+                  </div>
+                </div>
+                <ng-template #emptyTag>
+                  <p class="md:text-sm text-xs mb-0 p-3">Not Found Any Tags</p>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </mod-loading-indicator>
+      </div>
+
+      <div class="md:grid md:grid-cols-3 md:gap-4 md:pt-4">
+        <div
+          class="bg-diagnose-background px-5 py-4 md:col-span-3 md:col-start-1 lg:col-span-1 lg:col-start-3"
+        >
+          <!-- add a new search -->
+          <div class="mb-5 pb-4 border-b border-gray">
+            <h5 class="text-diagnose-on-background mb-4 text-sm">
+              Compare with
+            </h5>
+
+            <div
+              class="mb-5 break-all text-danger text-xs"
+              *ngIf="compareInputMsg.isShow"
+            >
+              {{ compareInputMsg.content }}
+            </div>
+
+            <div class="flex justify-between items-center">
+              <mod-combo-box
+                [class]="'w-1/6'"
+                [bindKey]="'code'"
+                [bindValue]="'name'"
+                [items]="languages"
+                [selectedItems]="[languageSelected]"
+                [isSearchable]="true"
+                [isShowChevronDownIcon]="false"
+                [showValue]="'code'"
+                (itemChanged)="onLanguageChanged($event)"
+                (closed)="onLanguageClosed()"
+                key="diagnose-component-language"
+              >
+              </mod-combo-box>
+
+              <mod-combo-box
+                [class]="'w-1/3'"
+                [bindKey]="'id'"
+                [bindValue]="'name'"
+                [items]="clients"
+                [selectedItems]="selectedClients"
+                [isSearchable]="true"
+                [isMultiple]="true"
+                (itemChanged)="onClientChanged($event)"
+                (closed)="onClientClosed()"
+                key="diagnose-component-client"
+              >
+              </mod-combo-box>
+
+              <mod-combo-box
+                [class]="'w-1/3'"
+                [bindKey]="'value'"
+                [bindValue]="'content'"
+                [items]="contentTypeList"
+                [selectedItems]="
+                  contentTypeSelected ? [contentTypeSelected] : []
+                "
+                (itemChanged)="onContentTypeChanged($event)"
+                (closed)="onContentTypeClosed()"
+                key="diagnose-component-content-type"
+              >
+              </mod-combo-box>
+
+              <button
+                class="bg-neutral text-on-neutral font-body text-sm p-2 rounded leading-6"
+                (click)="onAddANewSearch()"
+              >
+                Add
+              </button>
+            </div>
+          </div>
+
+          <div class="side-item ai-prediction pb-4">
+            <h5 class="text-diagnose-on-background mb-4 text-sm">
+              AI Prediction
+            </h5>
+            <mod-progress-bar
+              *ngFor="let predic of predictions | keyvalue"
+              [label]="predic.key | rightUnderscore"
+              [value]="predic?.value"
+              class="block mb-5 last:mb-0"
+            ></mod-progress-bar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mod-loading-indicator>
+</section>

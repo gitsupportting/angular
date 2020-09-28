@@ -1,0 +1,86 @@
+<div
+  class="flex flex-row content-center items-center flex-wrap w-full lg:hidden"
+>
+  <button
+    *ngFor="let row of inputArray; let rowIndex = index"
+    class="opacity-100 text-sm flex flex-row flex-no-wrap content-center justify-around items-center w-auto"
+    [ngClass]="{
+      'border-b-4 border-solid border-surface-alt': rowIndex < step
+    }"
+    (click)="onNavigate(rowIndex)"
+  >
+    <div
+      class="flex flex-row flex-no-wrap content-center justify-start items-center"
+    >
+      <i
+        class="mdi mdi-checkbox-marked-circle mdi-18px text-xl text-risk-0"
+        *ngIf="rowIndex < step - 1"
+      ></i>
+      <span
+        class="rounded-full flex items-center justify-center w-5 h-5 my-3"
+        [ngClass]="{
+          'bg-secondary text-neutral': rowIndex === step - 1,
+          'bg-on-neutral text-on-secondary': rowIndex !== step - 1
+        }"
+        *ngIf="rowIndex >= step - 1"
+        >{{ rowIndex + 1 }}</span
+      >
+      <div
+        [ngClass]="{ 'gray-text': rowIndex >= step }"
+        class="whitespace-no-wrap px-2"
+      >
+        {{ row }}
+      </div>
+    </div>
+    <span class="p-1 gray-text" *ngIf="rowIndex + 1 !== inputArray.length">
+      &gt;
+    </span>
+  </button>
+</div>
+<nav class="w-full hidden lg:table">
+  <ul class="table-row">
+    <li
+      *ngFor="let row of inputArray; let rowIndex = index"
+      [ngClass]="{
+        'border-b-4 border-solid border-secondary': rowIndex < step
+      }"
+      class="table-cell h-10"
+    >
+      <button (click)="onNavigate(rowIndex)" class="w-full h-full">
+        <div
+          class="opacity-100 text-sm flex flex-row flex-no-wrap content-center justify-around items-center w-auto h-full"
+        >
+          <div
+            class="flex flex-row flex-no-wrap content-center justify-start items-center h-full"
+          >
+            <i
+              class="mdi mdi-checkbox-marked-circle mdi-18px text-xl text-risk-0"
+              *ngIf="rowIndex < step - 1"
+            ></i>
+            <span
+              class="rounded-full flex items-center justify-center w-5 h-5 my-3 bg-on-neutral text-on-secondary p-1"
+              [ngClass]="{
+                'bg-secondary text-on-secondary': rowIndex === step - 1,
+                'bg-on-neutral text-neutral': rowIndex !== step - 1
+              }"
+              *ngIf="rowIndex >= step - 1"
+              >{{ rowIndex + 1 }}</span
+            >
+            <div
+              [ngClass]="{ 'gray-text': rowIndex >= step }"
+              class="whitespace-no-wrap px-2"
+            >
+              {{ row }}
+            </div>
+          </div>
+          <span
+            class="px-1 gray-text"
+            *ngIf="rowIndex + 1 !== inputArray.length"
+          >
+            &gt;
+          </span>
+        </div>
+      </button>
+    </li>
+  </ul>
+</nav>

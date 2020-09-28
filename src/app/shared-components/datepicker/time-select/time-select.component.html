@@ -1,0 +1,90 @@
+<ul
+  class="mod-time-select-controls m-0 p-0 text-center leading flex items-center"
+>
+  <li class="inline-block w-10 my-0 mx-auto">
+    <button
+      (click)="increase('hour')"
+      [disabled]="!showIncHour"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-up"></i>
+    </button>
+    <span [innerText]="hours"> </span>
+    <button
+      (click)="decrease('hour')"
+      [disabled]="!showDecHour"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-down"></i>
+    </button>
+  </li>
+  <li [innerText]="componentConfig.timeSeparator" class="w-2"></li>
+  <li class="inline-block w-10 my-0 mx-auto">
+    <button
+      (click)="increase('minute')"
+      [disabled]="!showIncMinute"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-up"></i>
+    </button>
+    <span [innerText]="minutes"> </span>
+    <button
+      (click)="decrease('minute')"
+      [disabled]="!showDecMinute"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-down"></i>
+    </button>
+  </li>
+  <ng-container *ngIf="componentConfig.showSeconds">
+    <li
+      [innerText]="componentConfig.timeSeparator"
+      class="mod-time-select-separator w-2"
+    ></li>
+    <li class="inline-block w-10 my-0 mx-auto">
+      <button
+        (click)="increase('second')"
+        [disabled]="!showIncSecond"
+        class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-up"></i>
+      </button>
+      <span [innerText]="seconds"> </span>
+      <button
+        (click)="decrease('second')"
+        [disabled]="!showDecSecond"
+        class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+        type="button"
+      >
+        <i class="mdi mdi-chevron-down"></i>
+      </button>
+    </li>
+  </ng-container>
+  <li
+    *ngIf="!componentConfig.showTwentyFourHours"
+    class="inline-block w-10 my-0 mx-auto"
+  >
+    <button
+      (click)="toggleMeridiem()"
+      [disabled]="!showToggleMeridiem"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-up"></i>
+    </button>
+    <span [innerText]="meridiem"> </span>
+    <button
+      (click)="toggleMeridiem()"
+      [disabled]="!showToggleMeridiem"
+      class="relative block w-6 h-6 my-2 mx-auto cursor-pointer"
+      type="button"
+    >
+      <i class="mdi mdi-chevron-down"></i>
+    </button>
+  </li>
+</ul>

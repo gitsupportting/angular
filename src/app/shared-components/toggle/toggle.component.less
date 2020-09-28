@@ -1,0 +1,21 @@
+@import '../../../_utils.less';
+
+:host {
+  --toggle-bg: #2e3334;
+  --toggle-on-bg: #4a5b64;
+
+  --toggle-bg-highlight: #1c403d;
+  --toggle-on-bg-highlight: #3fb8af;
+
+  :host-context([data-theme='light']) {
+    --toggle-bg: #bbbbbb;
+    --toggle-on-bg: #5a5e5f;
+
+    --toggle-bg-highlight: #4c827d;
+    --toggle-on-bg-highlight: #3fb8af;
+  }
+}
+
+@array: toggle-bg, toggle-on-bg, toggle-bg-highlight, toggle-on-bg-highlight;
+
+.GenClassFromVariableColor(@array, length(@array));

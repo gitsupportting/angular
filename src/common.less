@@ -1,0 +1,63 @@
+// color variables
+@white: #fff;
+@black: #111212;
+@semi-black: #1b1f22;
+@grey: #2d3436;
+@light-green: #04e762;
+@fountain-blue: #58c1b8;
+@red: #e8360b;
+
+// primary button mixin
+.button-primary(@height: 38px, @bgc: @grey, @color: @white) {
+  color: @color;
+  min-width: 114px;
+  padding: 0 15px;
+  height: @height;
+  line-height: @height;
+  box-shadow: 0px 1px 8px #2121211a;
+  border-radius: 4px;
+  transition: all 0.3s var(--transition-timing);
+  background-color: @bgc;
+  cursor: pointer;
+  font: 600 12px/20px 'Open Sans';
+
+  &:hover {
+    background-color: rgba(@bgc, 0.8);
+  }
+}
+
+// button with icon
+.button-icon (@distance: 5px, @fontSize: 18px) {
+  display: flex;
+  align-items: center;
+
+  .icon {
+    font-size: 18px;
+    margin-right: @distance;
+  }
+}
+
+.button-primary,
+.button--grey {
+  .button-primary();
+}
+
+// light green background & black font-color
+.button--light-green {
+  .button-primary(38px, @light-green, @semi-black);
+}
+
+// fountain blue background & black font-color
+.button--fountain-blue {
+  .button-primary(38px, @fountain-blue, @semi-black);
+}
+
+// black background & white font-color
+.button--black {
+  .button-primary(38px, @black, @white);
+}
+
+// black background & white font-color
+.button--delete {
+  .button-primary(38px, @red, @white);
+}

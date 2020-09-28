@@ -1,0 +1,94 @@
+<div
+  class="body bg-surface p-6 h-full flex flex-col justify-between"
+  *ngIf="!loadingItem"
+>
+  <div class="flex flex-col justify-start">
+    <div>
+      <p i18n class="text-xs">
+        Sometimes when you add words it will change the meaning and create
+        unintented false positives. Check to make sure you shouldn’t be using a
+        larger grouping of words Also consider making this a phrase match by
+        adding the start and end of sentences. For example “faster” means
+        something different when the context is sexual and it is said on a line
+        by itself
+      </p>
+    </div>
+    <div class="py-2 h-full flex flex-row justify-between">
+      <div class="text-center align-middle content-center w-4/12">
+        {{ '\{\{start_of_sentence\}\}' }}
+      </div>
+      <div class="w-2/5"></div>
+      <div class="text-center align-middle w-4/12">
+        {{ '\{\{end_of_sentence\}\}' }}
+      </div>
+    </div>
+    <div class="py-2 h-full flex flex-row justify-between">
+      <div class="block-select bg-neutral overflow-y-auto text-right p-3">
+        <div class="p-x-2">
+          <button
+            class="empty-word p-2 bg-on-primary h-12 opacity-25"
+            (click)="onAddStartWord('')"
+          ></button>
+        </div>
+        <div *ngFor="let startWord of startWords" class="p-3">
+          <div>
+            <button
+              class="p-2 bg-on-primary text-primary opacity-50 align-middle w-auto h-12"
+              (click)="onAddStartWord(startWord)"
+            >
+              {{ startWord }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="w-2/5 text-center align-middle">
+        <div class="h-12 font-bold p-2 m-3 bg-surface-alt text-on-background">
+          <div>
+            {{ inputText }}
+          </div>
+        </div>
+      </div>
+      <div
+        class="block-select bg-neutral overflow-y-auto text-left p-3 left-block"
+      >
+        <div class="p-x-2">
+          <button
+            class="empty-word p-2 bg-on-primary h-12 opacity-25 h-12"
+            (click)="onAddEndWord('')"
+          ></button>
+        </div>
+        <div *ngFor="let endWord of endWords" class="p-3">
+          <div>
+            <button
+              class="p-2 bg-on-primary text-primary opacity-50 align-middle w-auto h-12"
+              (click)="onAddEndWord(endWord)"
+            >
+              {{ endWord }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-row justify-end">
+    <div class="flex flex-row content-center text-sm h-16 my-4 p-3">
+      <button
+        i18n
+        class="text-neutral px-4 py-2 mx-4 rounded bg-on-neutral"
+        (click)="onOpenNewButton()"
+      >
+        Open in New tab
+      </button>
+      <button
+        i18n
+        class="bg-secondary text-on-primary px-4 py-2 mx-4 rounded"
+        (click)="onNextButton()"
+      >
+        Apply this Suggestion
+      </button>
+    </div>
+  </div>
+</div>
+<mod-loading-indicator *ngIf="loadingItem" [loading]="loadingItem"
+  >Loading...</mod-loading-indicator
+>

@@ -1,0 +1,12 @@
+{
+  "main": "../bundles/language-tasks-swagger-client-src.umd.js",
+  "module": "../fesm5/language-tasks-swagger-client-src.js",
+  "es2015": "../fesm2015/language-tasks-swagger-client-src.js",
+  "esm5": "../esm5/src/language-tasks-swagger-client-src.js",
+  "esm2015": "../esm2015/src/language-tasks-swagger-client-src.js",
+  "fesm5": "../fesm5/language-tasks-swagger-client-src.js",
+  "fesm2015": "../fesm2015/language-tasks-swagger-client-src.js",
+  "typings": "language-tasks-swagger-client-src.d.ts",
+  "sideEffects": false,
+  "name": "language-tasks-swagger-client/src"
+}

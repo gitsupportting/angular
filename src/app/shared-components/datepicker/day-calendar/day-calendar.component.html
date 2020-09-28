@@ -1,0 +1,67 @@
+<div
+  *ngIf="currentCalendarMode === CalendarMode.Day"
+  class="mod-day-calendar-container font-semibold text-sm leading-6 font-body"
+>
+  <mod-calendar-nav
+    (onGoToCurrent)="goToCurrent()"
+    (onLabelClick)="toggleCalendarMode(CalendarMode.Month)"
+    (onLeftNav)="onLeftNavClick()"
+    (onRightNav)="onRightNavClick()"
+    [isLabelClickable]="componentConfig.enableMonthSelector"
+    [label]="navLabel"
+    [showGoToCurrent]="_shouldShowCurrent"
+    [showLeftNav]="showLeftNav"
+    [showRightNav]="showRightNav"
+    [theme]="theme"
+  >
+  </mod-calendar-nav>
+
+  <div
+    [ngClass]="{ 'mod-hide-near-month': !componentConfig.showNearMonthDays }"
+    class="mod-calendar-wrapper box-border"
+  >
+    <div
+      class="mod-weekdays text-base mb-2 border border-solid border-neutral border-b-0 border-l-0"
+    >
+      <span
+        *ngFor="let weekday of weekdays"
+        [innerText]="getWeekdayName(weekday)"
+        class="mod-calendar-weekday box-border inline-block text-center border-l border-b border-solid border-neutral"
+      >
+      </span>
+    </div>
+    <div *ngFor="let week of weeks" class="mod-calendar-week">
+      <span
+        *ngIf="componentConfig.showWeekNumbers"
+        [innerText]="week[0].date.isoWeek()"
+        class="mod-week-number absolute text-xs"
+      >
+      </span>
+      <button
+        (click)="dayClicked(day)"
+        *ngFor="let day of week"
+        [attr.data-date]="day.date.format(componentConfig.format)"
+        [disabled]="day.disabled"
+        [innerText]="getDayBtnText(day)"
+        [ngClass]="getDayBtnCssClass(day)"
+        class="mod-calendar-day box-border cursor-pointer"
+        type="button"
+      ></button>
+    </div>
+  </div>
+</div>
+
+<mod-month-calendar
+  (onLeftNav)="onMonthCalendarLeftClick($event)"
+  (onLeftSecondaryNav)="onMonthCalendarSecondaryLeftClick($event)"
+  (onNavHeaderBtnClick)="toggleCalendarMode(CalendarMode.Day)"
+  (onRightNav)="onMonthCalendarRightClick($event)"
+  (onRightSecondaryNav)="onMonthCalendarSecondaryRightClick($event)"
+  (onSelect)="monthSelected($event)"
+  *ngIf="currentCalendarMode === CalendarMode.Month"
+  [config]="monthCalendarConfig"
+  [displayDate]="_currentDateView"
+  [ngModel]="_selected"
+  [theme]="theme"
+>
+</mod-month-calendar>
